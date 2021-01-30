@@ -1,5 +1,5 @@
 <template>
-  <div class="receive-view flex-col">
+  <app-content-view class="receive-view">
     <h2>{{ $t("receive_gulden.your_address") }}</h2>
     <p class="information">{{ $t("receive_gulden.information") }}</p>
     <div class="qr" @click="copyQr">
@@ -21,15 +21,12 @@
       ></clipboard-field>
       <div class="flex-1" />
     </div>
-    <div class="flex-1" />
-    <gulden-button-section>
-      <template v-slot:middle>
-        <button @click="buyGulden" class="buy-gulden">
-          {{ $t("buttons.buy_gulden") }}
-        </button>
-      </template>
-    </gulden-button-section>
-  </div>
+    <template v-slot:buttons-left>
+      <button @click="buyGulden" class="buy-gulden">
+        {{ $t("buttons.buy_gulden") }}
+      </button>
+    </template>
+  </app-content-view>
 </template>
 
 <script>
@@ -59,8 +56,8 @@ export default {
 
 <style lang="less" scoped>
 .receive-view {
-  height: 100%;
   text-align: center;
+
   & .information {
     margin: 0 0 30px 0;
   }
