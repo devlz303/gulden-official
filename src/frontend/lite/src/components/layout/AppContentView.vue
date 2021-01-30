@@ -8,7 +8,7 @@
         <slot name="buttons-left" />
       </div>
       <div class="buttons-right">
-        <slot name="right" />
+        <slot name="buttons-right" />
       </div>
     </div>
   </div>
