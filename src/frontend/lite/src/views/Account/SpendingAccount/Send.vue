@@ -1,5 +1,5 @@
 <template>
-  <div class="send-view flex-col">
+  <app-content-view class="send-view">
     <input
       v-model="amount"
       ref="amount"
@@ -26,8 +26,8 @@
       :class="passwordClass"
       @keydown="onPasswordKeydown"
     />
-    <div class="flex-1" />
-    <div class="buttons">
+
+    <template v-slot:buttons-left>
       <button @click="clearInput" class="clear" :disabled="disableClearButton">
         {{ $t("buttons.clear") }}
       </button>
@@ -38,8 +38,8 @@
       >
         {{ $t("buttons.send") }}
       </button>
-    </div>
-  </div>
+    </template>
+  </app-content-view>
 </template>
 
 <script>
@@ -109,6 +109,9 @@ export default {
     EventBus.$off("transaction-succeeded", this.onTransactionSucceeded);
   },
   methods: {
+    click() {
+      console.log("sdkjakjdkj");
+    },
     onPasswordKeydown() {
       this.isPasswordInvalid = false;
     },
@@ -156,27 +159,21 @@ export default {
 </script>
 
 <style lang="less" scoped>
-.send-view {
-  height: 100%;
-}
-
 input[type="number"]::-webkit-inner-spin-button {
   -webkit-appearance: none;
 }
 
-.buttons {
-  & > .clear {
-    width: 170px;
-  }
-  & > .clear:not([disabled]) {
-    background-color: #fff;
-    border: 1px solid var(--primary-color);
-    color: var(--primary-color);
-  }
+.clear {
+  width: 170px;
+}
+.clear:not([disabled]) {
+  background-color: #fff;
+  border: 1px solid var(--primary-color);
+  color: var(--primary-color);
+}
 
-  & > .send {
-    margin: 0 0 0 30px;
-    width: calc(100% - 200px);
-  }
+.send {
+  margin: 0 0 0 30px;
+  width: calc(100% - 200px);
 }
 </style>
