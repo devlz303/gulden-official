@@ -1,88 +1,85 @@
 <template>
-  <div class="setup-view flex-col">
-    <div class="steps-container">
-      <!-- step 1: choose setup type -->
-      <gulden-section v-if="current === 1">
-        <h2>{{ $t("setup.setup_gulden_wallet") }}</h2>
-        <gulden-section>
-          <div class="settings-row" @click="setupWallet(false)">
-            {{ $t("setup.create_new") }}
-            <fa-icon :icon="['fal', 'chevron-right']" class="arrow" />
-          </div>
-          <div class="settings-row" @click="setupWallet(true)">
-            {{ $t("setup.recover_existing") }}
-            <fa-icon :icon="['fal', 'chevron-right']" class="arrow" />
-          </div>
-        </gulden-section>
+  <app-content-view class="setup-view">
+    <!-- step 1: choose setup type -->
+    <gulden-section v-if="current === 1">
+      <h2>{{ $t("setup.setup_gulden_wallet") }}</h2>
+      <gulden-section>
+        <div class="settings-row" @click="setupWallet(false)">
+          {{ $t("setup.create_new") }}
+          <fa-icon :icon="['fal', 'chevron-right']" class="arrow" />
+        </div>
+        <div class="settings-row" @click="setupWallet(true)">
+          {{ $t("setup.recover_existing") }}
+          <fa-icon :icon="['fal', 'chevron-right']" class="arrow" />
+        </div>
       </gulden-section>
+    </gulden-section>
 
-      <!-- step 2: show recovery phrase -->
-      <gulden-section v-else-if="current === 2">
-        <h2 class="important">{{ $t("common.important") }}</h2>
-        <p>{{ $t("setup.this_is_your_recovery_phrase") }}</p>
-        <gulden-section class="phrase">
-          {{ recoveryPhrase }}
-        </gulden-section>
+    <!-- step 2: show recovery phrase -->
+    <gulden-section v-else-if="current === 2">
+      <h2 class="important">{{ $t("common.important") }}</h2>
+      <p>{{ $t("setup.this_is_your_recovery_phrase") }}</p>
+      <gulden-section class="phrase">
+        {{ recoveryPhrase }}
       </gulden-section>
+    </gulden-section>
 
-      <!-- step 3: enter/repeat recovery phrase -->
-      <gulden-section v-else-if="current === 3">
-        <h2>{{ $t("setup.enter_recovery_phrase") }}</h2>
-        <p v-if="!isRecovery">{{ $t("setup.repeat_your_recovery_phrase") }}</p>
-        <p v-else>{{ $t("setup.enter_existing_recovery_phrase") }}</p>
-        <phrase-input
-          ref="phraseinput"
-          :validate="validate"
-          :autofocus="true"
-          :isPhraseInvalid="isRecoveryPhraseInvalid === true"
-          :reset="reset"
-          @possible-phrase="onPossiblePhrase"
-          @enter="validatePhraseOnEnter"
+    <!-- step 3: enter/repeat recovery phrase -->
+    <gulden-section v-else-if="current === 3">
+      <h2>{{ $t("setup.enter_recovery_phrase") }}</h2>
+      <p v-if="!isRecovery">{{ $t("setup.repeat_your_recovery_phrase") }}</p>
+      <p v-else>{{ $t("setup.enter_existing_recovery_phrase") }}</p>
+      <phrase-input
+        ref="phraseinput"
+        :validate="validate"
+        :autofocus="true"
+        :isPhraseInvalid="isRecoveryPhraseInvalid === true"
+        :reset="reset"
+        @possible-phrase="onPossiblePhrase"
+        @enter="validatePhraseOnEnter"
+      />
+    </gulden-section>
+
+    <!-- step 4: enter a password -->
+    <div v-else-if="current === 4">
+      <h2>{{ $t("setup.choose_password") }}</h2>
+      <p>{{ $t("setup.choose_password_information") }}</p>
+      <gulden-form-field :title="$t('common.password')">
+        <input ref="password" type="password" v-model="password1" />
+      </gulden-form-field>
+      <gulden-form-field :title="$t('setup.repeat_password')">
+        <input
+          type="password"
+          v-model="password2"
+          :class="password2Status"
+          @keydown="validatePasswordsOnEnter"
         />
-      </gulden-section>
-
-      <!-- step 4: enter a password -->
-      <div v-else-if="current === 4">
-        <h2>{{ $t("setup.choose_password") }}</h2>
-        <p>{{ $t("setup.choose_password_information") }}</p>
-        <gulden-form-field :title="$t('common.password')">
-          <input ref="password" type="password" v-model="password1" />
-        </gulden-form-field>
-        <gulden-form-field :title="$t('setup.repeat_password')">
-          <input
-            type="password"
-            v-model="password2"
-            :class="password2Status"
-            @keydown="validatePasswordsOnEnter"
-          />
-        </gulden-form-field>
-      </div>
+      </gulden-form-field>
     </div>
-    <gulden-button-section class="steps-buttons">
-      <template v-slot:left>
-        <button v-if="showPreviousButton" @click="previousStep">
-          {{ $t("buttons.previous") }}
-        </button>
-      </template>
-      <template v-slot:right>
-        <button @click="nextStep" :disabled="!isNextEnabled">
-          <span v-show="showNextButton">
-            {{ $t("buttons.next") }}
-          </span>
-          <span v-show="showFinishButton">
-            {{ $t("buttons.finish") }}
-          </span>
-        </button>
-        <button
-          @click="nextStep"
-          v-show="showValidateButton"
-          :disabled="!isValidateButtonEnabled"
-        >
+
+    <template v-slot:buttons-left>
+      <button v-if="showPreviousButton" @click="previousStep">
+        {{ $t("buttons.previous") }}
+      </button>
+    </template>
+    <template v-slot:buttons-right>
+      <button @click="nextStep" :disabled="!isNextEnabled">
+        <span v-show="showNextButton">
           {{ $t("buttons.next") }}
-        </button>
-      </template>
-    </gulden-button-section>
-  </div>
+        </span>
+        <span v-show="showFinishButton">
+          {{ $t("buttons.finish") }}
+        </span>
+      </button>
+      <button
+        @click="nextStep"
+        v-show="showValidateButton"
+        :disabled="!isValidateButtonEnabled"
+      >
+        {{ $t("buttons.next") }}
+      </button>
+    </template>
+  </app-content-view>
 </template>
 
 <script>
@@ -263,14 +260,6 @@ export default {
 </script>
 
 <style lang="less" scoped>
-.setup-view {
-  height: 100%;
-}
-
-.steps-container {
-  flex: 1;
-}
-
 .settings-row {
   margin: 0 -10px;
   padding: 10px;
