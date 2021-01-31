@@ -21,7 +21,7 @@
       ></clipboard-field>
       <div class="flex-1" />
     </div>
-    <template v-slot:buttons-left>
+    <template v-slot:footer-left>
       <button @click="buyGulden" class="buy-gulden">
         {{ $t("buttons.buy_gulden") }}
       </button>

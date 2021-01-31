@@ -27,7 +27,7 @@
   <app-content-view v-else>
     <h2>{{ $t("new_wallet.title") }}</h2>
     <p v-html="$t('new_wallet.information')" class="information"></p>
-    <template v-slot:buttons-left>
+    <template v-slot:footer-left>
       <button @click="buyGulden" class="buy-gulden">
         {{ $t("buttons.buy_your_first_gulden") }}
       </button>
@@ -127,8 +127,7 @@ export default {
         component: TransactionDetailsDialog,
         componentProps: {
           mutation: mutation
-        },
-        showButtons: false
+        }
       });
     },
     buyGulden() {

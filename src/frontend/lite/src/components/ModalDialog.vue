@@ -17,11 +17,6 @@
           v-bind="componentProps"
         ></component>
       </div>
-      <gulden-button-section class="buttons" v-if="showButtons">
-        <template v-slot:right>
-          <button @click="closeModal">{{ $t("buttons.ok") }}</button>
-        </template>
-      </gulden-button-section>
     </div>
   </div>
 </template>
@@ -43,11 +38,6 @@ export default {
     },
     title() {
       return this.value.title || "title";
-    },
-    showButtons() {
-      return typeof this.value.showButtons === "boolean"
-        ? this.value.showButtons
-        : true;
     },
     type() {
       return this.value.type;
@@ -128,11 +118,6 @@ export default {
   margin: 30px 0;
   padding: 0 30px;
   overflow-y: auto;
-}
-
-.buttons {
-  height: 64px;
-  padding: 0 12px;
 }
 
 .error {

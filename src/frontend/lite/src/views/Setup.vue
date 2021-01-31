@@ -57,12 +57,12 @@
       </gulden-form-field>
     </div>
 
-    <template v-slot:buttons-left>
+    <template v-slot:footer-left>
       <button v-if="showPreviousButton" @click="previousStep">
         {{ $t("buttons.previous") }}
       </button>
     </template>
-    <template v-slot:buttons-right>
+    <template v-slot:footer-right>
       <button @click="nextStep" :disabled="!isNextEnabled">
         <span v-show="showNextButton">
           {{ $t("buttons.next") }}

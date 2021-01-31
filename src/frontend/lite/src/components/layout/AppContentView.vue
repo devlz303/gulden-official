@@ -3,12 +3,12 @@
     <div class="content">
       <slot />
     </div>
-    <div class="buttons">
-      <div class="left">
-        <slot name="buttons-left" />
+    <div class="footer">
+      <div class="footer-left">
+        <slot name="footer-left" />
       </div>
-      <div class="buttons-right">
-        <slot name="buttons-right" />
+      <div class="footer-left">
+        <slot name="footer-right" />
       </div>
     </div>
   </div>
@@ -29,11 +29,11 @@ export default {
 .content {
   flex: 1;
 }
-.buttons {
+.footer {
   display: flex;
   flex-direction: row;
 
-  & > .left {
+  & > .footer-left {
     flex: 1;
   }
 }

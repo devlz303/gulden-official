@@ -27,7 +27,7 @@
       @keydown="onPasswordKeydown"
     />
 
-    <template v-slot:buttons-left>
+    <template v-slot:footer-left>
       <button @click="clearInput" class="clear" :disabled="disableClearButton">
         {{ $t("buttons.clear") }}
       </button>
@@ -147,8 +147,7 @@ export default {
           amount: this.amount,
           address: this.address,
           password: this.password
-        },
-        showButtons: false
+        }
       });
     },
     onTransactionSucceeded() {
