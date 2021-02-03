@@ -36,6 +36,12 @@ const routes = [
           import(
             /* webpackChunkName: "account-receive" */ "../views/Account/SpendingAccount/Receive.vue"
           )
+      },
+      {
+        path: "price",
+        name: "price",
+        component: () =>
+          import(/* webpackChunkName: "price" */ "../views/Price.vue")
       }
     ]
   },

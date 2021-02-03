@@ -34,6 +34,10 @@
         <fa-icon :icon="['fas', 'arrow-circle-down']" />
         {{ $t("buttons.receive") }}
       </div>
+      <div :class="getButtonClassNames('price')" @click="routeTo('price')">
+        <fa-icon :icon="['fas', 'chart-line']" />
+        {{ $t("buttons.price") }}
+      </div>
       <div class="flex-1" />
     </section>
   </section>

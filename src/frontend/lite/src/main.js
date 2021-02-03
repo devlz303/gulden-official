@@ -41,7 +41,8 @@ import { faListUl, faLongArrowDown } from "@fortawesome/pro-regular-svg-icons";
 
 import {
   faArrowCircleDown,
-  faArrowCircleUp
+  faArrowCircleUp,
+  faChartLine
 } from "@fortawesome/free-solid-svg-icons";
 
 library.add([
@@ -49,6 +50,7 @@ library.add([
   faArrowCircleDown,
   faArrowCircleUp,
   faBan,
+  faChartLine,
   faChevronDown,
   faChevronRight,
   faCog,
