@@ -172,7 +172,7 @@ input[type="number"]::-webkit-inner-spin-button {
   & > .clear:not([disabled]) {
     height: 40px;
     line-height: 39px;
-    background-color: #fff;
+    background-color: var(--app-background-color);
     border: 1px solid var(--primary-color);
     color: var(--primary-color);
   }

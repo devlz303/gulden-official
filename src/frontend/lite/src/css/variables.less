@@ -2,32 +2,23 @@
 // common colors and variables
 // ==================================================
 :root {
-  --header-height: 62px;
-  --footer-height: 56px;
-  
-  --secondary-color: #111444;
-  
-  --error-color: #dd3333;
-  --error-color--hover: lighten(#dd3333, 8%);
-  
-  --disabled-color: #eee;
-  
-  --main-border-color: #ddd;
-  --scrollbar-background-color: #fff;
-  --thumb-background-color: var(--main-border-color);
-}
-
-// ==================================================
-// blue theme
-// ==================================================
-:root {
   @primary-color: #0039cc;
-  @hover-color: #0039cc10;
   
   --primary-color: @primary-color;
-  --success-color: @primary-color;
-  --success-color--hover: lighten(@primary-color, 4%);
-  --hover-color: @hover-color;
+  --primary-color--light: lighten(@primary-color, 4%);
+  --secondary-color: #111444;
+  --hover-color: #0039cc10;
+  --error-color: #dd3333;
+  --text-color: #000;
+  --paragraph-color: #222;
+  --version-info-color: #999;  
+  --main-border-color: #ddd;
+  --disabled-color: #eee;
+  --input-background-color: #efefef;
+  --app-background-color: #fff;
+
+  --header-height: 62px;
+  --footer-height: 56px;
 }
 
 // ==================================================
@@ -35,10 +26,8 @@
 // ==================================================
 :root[data-theme="orange"] {
   @primary-color: #ee6622;
-  @hover-color: #ee662210;
   
   --primary-color: @primary-color;
-  --success-color: @primary-color;
-  --success-color--hover: lighten(@primary-color, 4%);
-  --hover-color: @hover-color;
+  --primary-color--light: lighten(@primary-color, 4%);
+  --hover-color:  #ee662210;;
 }

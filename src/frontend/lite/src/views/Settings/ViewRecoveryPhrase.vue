@@ -106,7 +106,7 @@ export default {
   font-weight: 500;
   text-align: center;
   word-spacing: 4px;
-  background-color: #f5f5f5;
+  background-color: var(--input-background-color);
   user-select: none;
 }
 </style>

@@ -92,7 +92,7 @@ export default {
   width: calc(100% - 40px);
   height: auto;
   margin: 0px auto;
-  background-color: #fff;
+  background-color: var(--app-background-color);
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
   transition: all 0.3s ease;
 }
@@ -136,6 +136,6 @@ export default {
 }
 
 .error {
-  color: var(--error-color, #dd3333);
+  color: var(--error-color);
 }
 </style>

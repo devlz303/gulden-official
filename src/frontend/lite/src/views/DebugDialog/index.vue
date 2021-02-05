@@ -74,7 +74,6 @@ export default {
 .topbar {
   width: 100%;
   height: 56px;
-  color: #000;
   border-bottom: 1px solid var(--main-border-color);
 
   & div {

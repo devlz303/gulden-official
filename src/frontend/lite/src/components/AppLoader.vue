@@ -108,7 +108,7 @@ export default {
   margin-left: 0;
   align-items: center;
   justify-content: center;
-  background-color: #fff;
+  background-color: var(--app-background-color);
   z-index: 9999;
 }
 
@@ -133,7 +133,7 @@ export default {
 .version-container {
   font-size: 0.8em;
   text-transform: uppercase;
-  color: #999;
+  color: var(--version-info-color);
 
   & .divider {
     margin: 0 8px;
@@ -155,7 +155,7 @@ progress[value] {
 }
 
 progress[value]::-webkit-progress-bar {
-  background-color: #efefef;
+  background-color: var(--input-background-color);
 }
 
 progress[value]::-webkit-progress-value {

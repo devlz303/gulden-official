@@ -45,7 +45,7 @@ p {
   margin: 0 0 20px 0;
   font-size: 1em;
   line-height: 1.45em;
-  color: #222;
+  color: var(--paragraph-color);
 }
 
 del {
@@ -56,11 +56,11 @@ a,
 a:active,
 a:visited {
   text-decoration: none;
-  color: #000;
+  color: var(--text-color);
 }
 
 a:hover {
-  color: #000;
+  color: var(--text-color);
 }
 
 .select-all {
@@ -87,7 +87,7 @@ select {
   border-radius: 0px;
   border: 0;
   color: var(--primary-color);
-  background-color: #efefef;
+  background-color: var(--input-background-color);
   margin: 0 0 10px 0;
 }
 
@@ -103,13 +103,12 @@ input[type=text],
 input[type=password],
 input[type=number] {
   padding: 0 10px;
-  background-color: #f5f5f5;
 
   &:focus,
   &.success,
   &:focus.success {
-    color: var(--success-color);
-    border-color: var(--success-color);
+    color: var(--primary-color);
+    border-color: var(--primary-color);
   }
 
   &.error,
@@ -137,24 +136,17 @@ button {
   -webkit-font-smoothing: antialiased !important;
   transition: all 0.3s;
   border-radius: 0px;
-  color: #fff;
-  background-color: var(--success-color);
+  color: var(--app-background-color);
+  background-color: var(--primary-color);
 
   &:hover {
-    background-color: var(--success-color--hover);
+    background-color: var(--primary-color--light);
   }
 
   &[disabled="disabled"],
   &[disabled="disabled"]:hover {
     background-color: var(--disabled-color);
     cursor: default;
-  }
-
-  &.error {
-    background-color: var(--error-color);
-  }
-  &.error:hover {
-    background-color: var(--error-color--hover);
   }
 }
 

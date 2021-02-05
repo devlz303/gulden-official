@@ -12,7 +12,6 @@
           v-for="mutation in group.mutations"
           :key="mutation.txHash"
           @click="showTransactionDetails(mutation)"
-          :class="mutationRowClass(mutation.txHash)"
         >
           <div class="icon">
             <fa-icon :icon="['fal', mutationIcon(mutation)]" />
@@ -125,9 +124,6 @@ export default {
     formatAmount(amount) {
       return `${(amount / 100000000).toFixed(2)}`;
     },
-    mutationRowClass(txHash) {
-      return txHash === this.txHash ? "selected" : "";
-    },
     showTransactionDetails(mutation) {
       EventBus.$emit("show-dialog", {
         title: this.$t(
@@ -201,11 +197,6 @@ h4 {
   &:hover {
     color: var(--primary-color);
     background: var(--hover-color);
-  }
-
-  &.selected {
-    color: #fff;
-    background: var(--primary-color);
   }
 }
 
