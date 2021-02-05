@@ -1,44 +1,37 @@
 <template>
-  <div class="transactions-view">
-    <div v-if="hasMutations">
+  <app-content-view v-if="hasMutations">
+    <div
+      class="mutation-group"
+      v-for="group in groupedMutations"
+      :key="group.idx"
+    >
+      <h4>{{ formatDate(group.date) }}</h4>
       <div
-        class="mutation-group"
-        v-for="group in groupedMutations"
-        :key="group.idx"
+        class="mutation-row flex-row"
+        v-for="mutation in group.mutations"
+        :key="mutation.txHash"
+        @click="showTransactionDetails(mutation)"
       >
-        <h4>{{ formatDate(group.date) }}</h4>
-        <div
-          class="mutation-row flex-row"
-          v-for="mutation in group.mutations"
-          :key="mutation.txHash"
-          @click="showTransactionDetails(mutation)"
-        >
-          <div class="icon">
-            <fa-icon :icon="['fal', mutationIcon(mutation)]" />
-          </div>
-          <div class="time">{{ formatTime(mutation.timestamp) }}</div>
-          <div class="tx-details">
-            {{ mutation.recipient_addresses || mutation.txHash }}
-          </div>
-          <div class="amount">{{ formatAmount(mutation.change) }}</div>
+        <div class="icon">
+          <fa-icon :icon="['fal', mutationIcon(mutation)]" />
         </div>
+        <div class="time">{{ formatTime(mutation.timestamp) }}</div>
+        <div class="tx-details">
+          {{ mutation.recipient_addresses || mutation.txHash }}
+        </div>
+        <div class="amount">{{ formatAmount(mutation.change) }}</div>
       </div>
     </div>
-    <div v-else class="new-wallet flex-col">
-      <h2>{{ $t("new_wallet.title") }}</h2>
-      <p v-html="$t('new_wallet.information')" class="information"></p>
-
-      <div class="flex-1" />
-
-      <gulden-button-section>
-        <template v-slot:middle>
-          <button @click="buyGulden" class="buy-gulden" :disabled="buyDisabled">
-            {{ $t("buttons.buy_your_first_gulden") }}
-          </button>
-        </template>
-      </gulden-button-section>
-    </div>
-  </div>
+  </app-content-view>
+  <app-content-view v-else>
+    <h2>{{ $t("new_wallet.title") }}</h2>
+    <p v-html="$t('new_wallet.information')" class="information"></p>
+    <template v-slot:footer-left>
+      <button @click="buyGulden" class="buy-gulden" :disabled="buyDisabled">
+        {{ $t("buttons.buy_your_first_gulden") }}
+      </button>
+    </template>
+  </app-content-view>
 </template>
 
 <script>
@@ -157,10 +150,6 @@ export default {
 </script>
 
 <style lang="less" scoped>
-.transactions-view {
-  height: 100%;
-}
-
 .mutation-group {
   margin-bottom: 30px;
 }
@@ -198,10 +187,6 @@ h4 {
     color: var(--primary-color);
     background: var(--hover-color);
   }
-}
-
-.new-wallet {
-  height: 100%;
 }
 
 .buy-gulden {

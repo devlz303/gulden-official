@@ -1,5 +1,5 @@
 <template>
-  <div class="view-recovery-phrase-view flex-col">
+  <app-content-view>
     <h2>
       <span v-if="current === 1">{{ $t("common.enter_your_password") }}</span>
       <span class="important" v-else>{{ $t("common.important") }}</span>
@@ -23,24 +23,19 @@
         {{ recoveryPhrase }}
       </gulden-section>
     </div>
-
-    <div class="flex-1" />
-
-    <gulden-button-section>
-      <template v-slot:right>
-        <button
-          v-if="current === 1"
-          @click="getRecoveryPhrase"
-          :disabled="isNextDisabled"
-        >
-          {{ $t("buttons.next") }}
-        </button>
-        <button v-if="current === 2" @click="ready">
-          {{ $t("buttons.ready") }}
-        </button>
-      </template>
-    </gulden-button-section>
-  </div>
+    <template v-slot:footer-right>
+      <button
+        v-if="current === 1"
+        @click="getRecoveryPhrase"
+        :disabled="isNextDisabled"
+      >
+        {{ $t("buttons.next") }}
+      </button>
+      <button v-if="current === 2" @click="ready">
+        {{ $t("buttons.ready") }}
+      </button>
+    </template>
+  </app-content-view>
 </template>
 
 <script>
@@ -96,10 +91,6 @@ export default {
 </script>
 
 <style lang="less" scoped>
-.view-recovery-phrase-view {
-  height: 100%;
-}
-
 .phrase {
   padding: 15px;
   font-size: 1.05em;

@@ -1,14 +1,13 @@
 import Vue from "vue";
 
+import AppContentView from "./layout/AppContentView";
 import ClipboardField from "./ClipboardField";
-import GuldenButtonSection from "./layout/GuldenButtonSection";
+import FontAwesomeIcon from "./FontAwesomeIcon";
 import GuldenFormField from "./layout/GuldenFormField";
 import GuldenSection from "./layout/GuldenSection";
 
+Vue.component(AppContentView.name, AppContentView);
 Vue.component(ClipboardField.name, ClipboardField);
-Vue.component(GuldenButtonSection.name, GuldenButtonSection);
+Vue.component("fa-icon", FontAwesomeIcon);
 Vue.component(GuldenFormField.name, GuldenFormField);
 Vue.component(GuldenSection.name, GuldenSection);
-
-import FontAwesomeIcon from "./FontAwesomeIcon";
-Vue.component("fa-icon", FontAwesomeIcon);
