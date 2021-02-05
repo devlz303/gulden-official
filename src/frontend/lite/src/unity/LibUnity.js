@@ -2,13 +2,11 @@ import { app, ipcMain as ipc } from "electron";
 import fs from "fs";
 import axios from "axios";
 import FormData from "form-data";
-import store from "../store";
-
-import libUnity from "native-ext-loader!./lib_unity.node";
-
-// Needed to get index/offset of staticfiltercp file inside asar
 import disk from "asar/lib/disk";
 import path from "path";
+import store from "@/store";
+import libUnity from "native-ext-loader!./lib_unity.node";
+
 const isDevelopment = process.env.NODE_ENV !== "production";
 
 class LibUnity {

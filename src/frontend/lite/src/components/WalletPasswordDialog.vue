@@ -20,8 +20,8 @@
 </template>
 
 <script>
-import { LibraryController } from "../unity/Controllers";
-import EventBus from "../EventBus";
+import { LibraryController } from "@/unity/Controllers";
+import EventBus from "@/EventBus";
 
 export default {
   name: "WalletPasswordDialog",

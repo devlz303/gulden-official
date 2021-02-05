@@ -26,8 +26,8 @@
 
 <script>
 import { mapState } from "vuex";
-import AppStatus from "../AppStatus";
-import { LibraryController } from "../unity/Controllers";
+import AppStatus from "@/AppStatus";
+import { LibraryController } from "@/unity/Controllers";
 
 let progressTimeout = null;
 let progressCount = 0;

@@ -1,5 +1,5 @@
-import AppStatus from "../../AppStatus";
 import { Menu } from "electron";
+import AppStatus from "@/AppStatus";
 
 function EnableDebugWindowOnCoreReady() {
   try {

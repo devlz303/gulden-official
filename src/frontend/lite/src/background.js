@@ -7,18 +7,17 @@ import {
   /* installVueDevtools */
 } from "vue-cli-plugin-electron-builder/lib";
 
-const isDevelopment = process.env.NODE_ENV !== "production";
-const os = require("os");
-
+import os from "os";
 import path from "path";
 import fs from "fs";
-
-import LibUnity from "./unity/LibUnity";
-import walletPath from "./walletPath";
-
-import store from "./store";
-import AppStatus from "./AppStatus";
 import axios from "axios";
+
+import LibUnity from "@/unity/LibUnity";
+import walletPath from "@/walletPath";
+import store from "@/store";
+import AppStatus from "@/AppStatus";
+
+const isDevelopment = process.env.NODE_ENV !== "production";
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.

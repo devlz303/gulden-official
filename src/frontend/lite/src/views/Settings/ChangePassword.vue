@@ -56,7 +56,7 @@
 
 <script>
 import { mapState } from "vuex";
-import { LibraryController } from "../../unity/Controllers";
+import { LibraryController } from "@/unity/Controllers";
 
 export default {
   data() {

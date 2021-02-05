@@ -1,8 +1,7 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-import Account from "../views/Account";
-
-import { AccountsController } from "../unity/Controllers";
+import Account from "@/views/Account";
+import { AccountsController } from "@/unity/Controllers";
 
 Vue.use(VueRouter);
 

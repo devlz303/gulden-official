@@ -7,7 +7,7 @@
 
 <script>
 import { mapState } from "vuex";
-import AppWallet from "./AppWallet";
+import AppWallet from "@/AppWallet";
 
 export default {
   name: "App",

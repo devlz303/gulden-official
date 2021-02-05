@@ -41,8 +41,8 @@
 
 <script>
 import { mapState, mapGetters } from "vuex";
-import WalletPasswordDialog from "../components/WalletPasswordDialog";
-import EventBus from "../EventBus";
+import WalletPasswordDialog from "@/components/WalletPasswordDialog";
+import EventBus from "@/EventBus";
 
 export default {
   name: "WalletLayout",

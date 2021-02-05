@@ -56,7 +56,7 @@
 </template>
 
 <script>
-import { RpcController } from "../../unity/Controllers";
+import { RpcController } from "@/unity/Controllers";
 
 var updateFilterTimeout = null;
 

@@ -86,9 +86,9 @@
 </template>
 
 <script>
-import { LibraryController } from "../unity/Controllers";
-import PhraseInput from "../components/PhraseInput";
-import EventBus from "../EventBus.js";
+import { LibraryController } from "@/unity/Controllers";
+import PhraseInput from "@/components/PhraseInput";
+import EventBus from "@/EventBus.js";
 
 export default {
   data() {

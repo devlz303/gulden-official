@@ -1,11 +1,10 @@
 import Vue from "vue";
 import Vuex from "vuex";
 import { createPersistedState, createSharedMutations } from "vuex-electron";
-import syncState from "./syncState";
 import Store from "electron-store";
-import walletPath from "../walletPath";
-
+import syncState from "./syncState";
 import modules from "./modules";
+import walletPath from "@/walletPath";
 
 Vue.use(Vuex);
 

@@ -10,13 +10,12 @@
 
 <script>
 import { mapState } from "vuex";
-import AppStatus from "./AppStatus";
-import AppLoader from "./components/AppLoader";
-import ModalDialog from "./components/ModalDialog";
-import EventBus from "./EventBus.js";
-
-import SetupLayout from "./layouts/SetupLayout";
-import WalletLayout from "./layouts/WalletLayout";
+import AppStatus from "@/AppStatus";
+import AppLoader from "@/components/AppLoader";
+import ModalDialog from "@/components/ModalDialog";
+import EventBus from "@/EventBus.js";
+import SetupLayout from "@/layouts/SetupLayout";
+import WalletLayout from "@/layouts/WalletLayout";
 
 export default {
   name: "AppWallet",

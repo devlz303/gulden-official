@@ -13,8 +13,7 @@
 </template>
 
 <script>
-import EventBus from "../EventBus";
-import ClipboardField from "./ClipboardField.vue";
+import ClipboardField from "@/components/ClipboardField.vue";
 
 export default {
   components: { ClipboardField },
@@ -35,9 +34,6 @@ export default {
     }
   },
   methods: {
-    close() {
-      EventBus.$emit("close-dialog");
-    },
     formatDate(d) {
       let date = new Date(d);
       let options = {

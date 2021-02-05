@@ -44,8 +44,8 @@
 
 <script>
 import { mapState } from "vuex";
-import TransactionDetailsDialog from "../../../components/TransactionDetailsDialog";
-import EventBus from "../../../EventBus";
+import TransactionDetailsDialog from "@/components/TransactionDetailsDialog";
+import EventBus from "@/EventBus";
 import { BackendUtilities } from "@/unity/Controllers";
 
 export default {
