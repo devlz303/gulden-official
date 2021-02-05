@@ -1,48 +1,44 @@
-// blue theme
-@primary-color: #0039cc;
-@hover-color: #0039cc10;
-@success-color: @primary-color;
-@success-color--hover: lighten(@success-color, 4%); 
-
-:root {
-  --primary-color: @primary-color;
-  --hover-color: @hover-color;
-  --success-color: @primary-color;
-  --success-color--hover: @success-color--hover;
-}
-
-// orange theme
-@primary-color--orange: #ee6622;
-@hover-color--orange: #ee662210;
-@success-color--orange: @primary-color--orange;
-@success-color--hover--orange: lighten(@success-color--orange, 4%); 
-
-:root[data-theme="orange"] {
-  --primary-color: @primary-color--orange;
-  --hover-color: @hover-color--orange;
-  --success-color: @primary-color--orange;
-  --success-color--hover: @success-color--hover--orange;
-}
-
-// common colors
-@secondary-color: #111444;
-@error-color: #dd3333;
-@disabled-color: #eee;
-@error-color--hover: lighten(@error-color, 8%);
-
-// common variables
+// ==================================================
+// common colors and variables
+// ==================================================
 :root {
   --header-height: 62px;
   --footer-height: 56px;
   
-  --secondary-color: @secondary-color;
+  --secondary-color: #111444;
   
-  --error-color: @error-color;
-  --error-color--hover: @error-color--hover;
+  --error-color: #dd3333;
+  --error-color--hover: lighten(#dd3333, 8%);
   
-  --disabled-color: @disabled-color;
+  --disabled-color: #eee;
   
   --main-border-color: #ddd;
   --scrollbar-background-color: #fff;
   --thumb-background-color: var(--main-border-color);
+}
+
+// ==================================================
+// blue theme
+// ==================================================
+:root {
+  @primary-color: #0039cc;
+  @hover-color: #0039cc10;
+  
+  --primary-color: @primary-color;
+  --success-color: @primary-color;
+  --success-color--hover: lighten(@primary-color, 4%);
+  --hover-color: @hover-color;
+}
+
+// ==================================================
+// orange theme
+// ==================================================
+:root[data-theme="orange"] {
+  @primary-color: #ee6622;
+  @hover-color: #ee662210;
+  
+  --primary-color: @primary-color;
+  --success-color: @primary-color;
+  --success-color--hover: lighten(@primary-color, 4%);
+  --hover-color: @hover-color;
 }
