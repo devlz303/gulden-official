@@ -4,19 +4,15 @@ import store from "./store";
 import router from "./router";
 import i18n from "./i18n";
 
-import "./components";
+import "@/components";
 
-import VueSlider from "vue-slider-component";
-import "vue-slider-component/theme/antd.css";
-Vue.component("VueSlider", VueSlider);
+import "@/plugins/fontawesome";
 
 import ToggleButton from "vue-js-toggle-button";
 Vue.use(ToggleButton);
 
 import PortalVue from "portal-vue";
 Vue.use(PortalVue);
-
-import "@/plugins/fontawesome";
 
 Vue.config.productionTip = false;
 
