@@ -8,9 +8,6 @@ import "@/components";
 import "@/plugins/fontawesome";
 import i18n from "@/plugins/i18n";
 
-import PortalVue from "portal-vue";
-Vue.use(PortalVue);
-
 Vue.config.productionTip = false;
 
 new Vue({
