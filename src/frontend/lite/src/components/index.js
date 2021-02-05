@@ -11,3 +11,6 @@ Vue.component(GuldenButtonSection.name, GuldenButtonSection);
 Vue.component(GuldenFormField.name, GuldenFormField);
 Vue.component(GuldenSection.name, GuldenSection);
 Vue.component(SelectList.name, SelectList);
+
+import FontAwesomeIcon from "./FontAwesomeIcon";
+Vue.component("fa-icon", FontAwesomeIcon);
