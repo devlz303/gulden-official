@@ -158,11 +158,6 @@ button {
   }
 }
 
-/* range slider */
-input[type=range] {
-  width: 100%;
-}
-
 /* common styles */
 .important {
   color: var(--error-color);
@@ -173,57 +168,4 @@ input[type=range] {
   /* Required for text-overflow to do anything */
   white-space: nowrap;
   overflow: hidden;
-}
-
-.vertical-center {
-  margin: 0;
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-}
-
-.flex-row {
-  display: flex;
-  flex-direction: row;
-}
-
-.flex-col {
-  display: flex;
-  flex-direction: column;
-}
-
-.flex-1 {
-  flex: 1;
-}
-
-.align-right {
-  text-align: right;
-}
-
-.scrollable {
-  overflow: hidden;
-  
-  &:hover {
-    overflow-y: overlay;
-  }
-
-  &.scrollable-x:hover {
-    overflow-x: overlay;
-  }
-
-  &::-webkit-scrollbar {
-    width: 14px;
-  }
-  &::-webkit-scrollbar-track {
-    background: var(--scrollbar-background-color);
-  }
-  &::-webkit-scrollbar-thumb {
-    border: 3px solid var(--scrollbar-background-color);
-    background-color: var(--thumb-background-color);
-    border-radius: 14px;
-  }
-}
-
-.transactionicon {
-  width: 25px;
 }

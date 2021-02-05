@@ -1,0 +1,23 @@
+.scrollable {
+  overflow: hidden;
+  
+  &:hover {
+    overflow-y: overlay;
+  }
+
+  &.scrollable-x:hover {
+    overflow-x: overlay;
+  }
+
+  &::-webkit-scrollbar {
+    width: 14px;
+  }
+  &::-webkit-scrollbar-track {
+    background: var(--scrollbar-background-color);
+  }
+  &::-webkit-scrollbar-thumb {
+    border: 3px solid var(--scrollbar-background-color);
+    background-color: var(--thumb-background-color);
+    border-radius: 14px;
+  }
+}
