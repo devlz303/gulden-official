@@ -7,7 +7,7 @@
       <div class="footer-left">
         <slot name="footer-left" />
       </div>
-      <div class="footer-left">
+      <div class="footer-right">
         <slot name="footer-right" />
       </div>
     </div>
