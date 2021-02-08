@@ -1,7 +1,7 @@
 import { Menu } from "electron";
 import AppStatus from "@/AppStatus";
 
-function EnableDebugWindowOnCoreReady() {
+const enableDebugWindowOnCoreReady = async () => {
   try {
     let menu = Menu.getApplicationMenu();
     if (menu === null) return;
@@ -11,7 +11,7 @@ function EnableDebugWindowOnCoreReady() {
   } catch (e) {
     console.error(e);
   }
-}
+};
 
 const state = {
   coreReady: false,
@@ -21,7 +21,6 @@ const state = {
   status: AppStatus.start,
   theme: null,
   unityVersion: null,
-  walletExists: null,
   walletVersion: null
 };
 
@@ -34,7 +33,7 @@ const actions = {
       state.progress === 1 ? AppStatus.ready : AppStatus.synchronize
     );
     commit("SET_CORE_READY");
-    EnableDebugWindowOnCoreReady();
+    enableDebugWindowOnCoreReady();
   },
   SET_LANGUAGE({ commit }, language) {
     commit("SET_LANGUAGE", language);
@@ -53,11 +52,6 @@ const actions = {
   },
   SET_UNITY_VERSION({ commit }, version) {
     commit("SET_UNITY_VERSION", version);
-  },
-  SET_WALLET_EXISTS({ commit }, walletExists) {
-    let status = walletExists ? AppStatus.synchronize : AppStatus.setup;
-    commit("SET_STATUS", status);
-    commit("SET_WALLET_EXISTS", walletExists);
   },
   SET_WALLET_VERSION({ commit }, version) {
     commit("SET_WALLET_VERSION", version);
@@ -86,9 +80,6 @@ const mutations = {
   },
   SET_UNITY_VERSION(state, version) {
     state.unityVersion = version;
-  },
-  SET_WALLET_EXISTS(state, walletExists) {
-    state.walletExists = walletExists;
   },
   SET_WALLET_VERSION(state, version) {
     state.walletVersion = version;

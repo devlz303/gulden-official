@@ -6,6 +6,7 @@ import disk from "asar/lib/disk";
 import path from "path";
 import store from "@/store";
 import libUnity from "native-ext-loader!./lib_unity.node";
+import AppStatus from "@/AppStatus";
 
 const isDevelopment = process.env.NODE_ENV !== "production";
 
@@ -284,13 +285,13 @@ class LibUnity {
     };
     libraryListener.notifyInitWithExistingWallet = function() {
       console.log("received: notifyInitWithExistingWallet");
-      store.dispatch("app/SET_WALLET_EXISTS", true);
+      store.dispatch("app/SET_STATUS", AppStatus.synchronize);
     };
 
     libraryListener.notifyInitWithoutExistingWallet = function() {
       console.log("received: notifyInitWithoutExistingWallet");
       self.newRecoveryPhrase = libraryController.GenerateRecoveryMnemonic();
-      store.dispatch("app/SET_WALLET_EXISTS", false);
+      store.dispatch("app/SET_STATUS", AppStatus.setup);
     };
 
     libraryListener.notifyShutdown = function() {
