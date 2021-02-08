@@ -3,7 +3,6 @@
     <div>routename: {{ routeName }}</div>
     <div>statusses: {{ statusses.join(" > ") }}</div>
     <div>progresses: {{ progresses.join(" > ") }}</div>
-
     <div>balance: {{ balance }}</div>
     <div>receiveAddress: {{ receiveAddress }}</div>
 
@@ -13,9 +12,19 @@
     <button @click="blockUI">block ui</button>
     <div>{{ ping }}</div>
 
-    <input v-model="command" />
-    <button @click="execute">execute</button>
-    <button @click="getProgressAsync">progress</button>
+    <div v-if="mnemonic">
+      {{ mnemonic }}
+      <button @click="createWallet">create wallet</button>
+    </div>
+    <div v-else>
+      <div>
+        <input v-model="command" />
+        <button @click="execute">execute</button>
+      </div>
+      <div>
+        <button @click="getProgressAsync">progress</button>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -33,7 +42,7 @@ export default {
     return {
       routeName: null,
       statusses: [],
-      progress: 0,
+      mnemonic: null,
       progresses: [],
       random: null,
       ping: null,
@@ -44,7 +53,7 @@ export default {
     this.onStatusChanged();
   },
   computed: {
-    ...mapState("app", ["status"]),
+    ...mapState("app", ["status", "progress"]),
     ...mapState("wallet", ["balance", "receiveAddress"]),
     showLoader() {
       return (
@@ -62,6 +71,17 @@ export default {
     }
   },
   methods: {
+    async createWallet() {
+      if (
+        await LibraryController.InitWalletFromRecoveryPhraseAsync(
+          this.mnemonic.phrase,
+          "111111"
+        )
+      ) {
+        this.mnemonic = null;
+        this.$router.push({ name: "account" });
+      }
+    },
     async execute() {
       let result = await RpcController.ExecuteAsync(this.command);
       console.log(result);
@@ -70,17 +90,18 @@ export default {
       console.log(await LibraryController.GetUnifiedProgressAsync());
     },
     async blockUI() {
-      this.ping = await AsyncUtilities.BlockUI(Math.random());
+      this.ping = await AsyncUtilities.BlockUIAsync(Math.random());
     },
     async getRandom() {
-      this.random = await AsyncUtilities.GetRandom();
+      this.random = await AsyncUtilities.GetRandomAsync();
     },
-    onStatusChanged() {
+    async onStatusChanged() {
       this.statusses.push(this.status);
       let routeName;
       switch (this.status) {
         case AppStatus.setup:
           routeName = "setup";
+          this.mnemonic = await LibraryController.GenerateRecoveryMnemonicAsync();
           break;
         case AppStatus.synchronize:
           routeName = "transactions";
@@ -95,7 +116,7 @@ export default {
     updateProgress() {
       clearTimeout(progressTimeout);
       if (this.progress !== 0 && this.status !== AppStatus.synchronize) return;
-      this.progress = LibraryController.GetUnifiedProgress();
+      //this.progress = LibraryController.GetUnifiedProgress();
       if (this.progress === 1) {
         this.$store.dispatch("app/SET_STATUS", AppStatus.ready);
       } else {

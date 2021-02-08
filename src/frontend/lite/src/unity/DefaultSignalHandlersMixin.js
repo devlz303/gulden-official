@@ -20,7 +20,7 @@ let CustomSignalHandlersMixin = superclass =>
       let libraryListener = this.libraryListener;
       let libraryController = this.libraryController;
 
-      libraryListener.notifyCoreReady = () => {
+      libraryListener.notifyCoreReady = async () => {
         this._initializeWalletController();
         this._initializeAccountsController();
 
@@ -28,11 +28,11 @@ let CustomSignalHandlersMixin = superclass =>
         this._setStateWhenCoreAndMainWindowReady();
       };
 
-      libraryListener.notifyBalanceChange = new_balance => {
+      libraryListener.notifyBalanceChange = async new_balance => {
         store.dispatch("wallet/SET_BALANCE", new_balance);
       };
 
-      libraryListener.notifyNewMutation = (/*mutation, self_committed*/) => {
+      libraryListener.notifyNewMutation = async (/*mutation, self_committed*/) => {
         store.dispatch(
           "wallet/SET_MUTATIONS",
           libraryController.getMutationHistory()
@@ -45,27 +45,32 @@ let CustomSignalHandlersMixin = superclass =>
         this._updateAccounts();
       };
 
-      libraryListener.notifyUpdatedTransaction = (/*transaction*/) => {
+      libraryListener.notifyUpdatedTransaction = async (/*transaction*/) => {
         store.dispatch(
           "wallet/SET_MUTATIONS",
           libraryController.getMutationHistory()
         );
       };
 
-      libraryListener.notifyInitWithExistingWallet = () => {
+      libraryListener.notifyInitWithExistingWallet = async () => {
         store.dispatch("app/SET_WALLET_EXISTS", true);
       };
 
-      libraryListener.notifyInitWithoutExistingWallet = () => {
+      libraryListener.notifyInitWithoutExistingWallet = async () => {
         this.newRecoveryPhrase = libraryController.GenerateRecoveryMnemonic();
         store.dispatch("app/SET_WALLET_EXISTS", false);
       };
 
-      libraryListener.notifyShutdown = () => {
+      libraryListener.notifyShutdown = async () => {
         //NB! It is important to set the libraryListener to null here as this is the last thing the core lib is waiting on for clean exit; once we set this to null we are free to quit the app
         libraryListener = null;
         this.isTerminated = true;
         app.quit();
+      };
+
+      libraryListener.notifyUnifiedProgress = async progress => {
+        console.log(`notifyUnifiedProgress: ${progress}`);
+        store.dispatch("app/SET_PROGRESS", progress);
       };
     }
 
@@ -99,19 +104,17 @@ let CustomSignalHandlersMixin = superclass =>
     _initializeWalletController() {
       console.log("_initializeWalletController");
 
-      this.walletListener.notifyBalanceChange = function(new_balance) {
+      this.walletListener.notifyBalanceChange = async new_balance => {
         console.log(`walletListener.notifyBalanceChange`);
         store.dispatch("wallet/SET_WALLET_BALANCE", new_balance);
       };
 
-      this.walletListener.notifyNewMutation = function(
-        mutation /*, self_committed*/
-      ) {
+      this.walletListener.notifyNewMutation = async mutation => {
         console.log("walletListener.notifyNewMutation");
         console.log(mutation);
       };
 
-      this.walletListener.notifyUpdatedTransaction = function(transaction) {
+      this.walletListener.notifyUpdatedTransaction = async transaction => {
         console.log("walletListener.notifyUpdatedTransaction");
         console.log(transaction);
       };
@@ -122,7 +125,7 @@ let CustomSignalHandlersMixin = superclass =>
     _initializeAccountsController() {
       console.log("_initializeAccountsController");
 
-      this.accountsListener.onAccountNameChanged = (
+      this.accountsListener.onAccountNameChanged = async (
         accountUUID,
         newAccountName
       ) => {

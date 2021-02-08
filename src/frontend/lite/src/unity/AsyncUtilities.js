@@ -1,12 +1,16 @@
 import { ipcRenderer as ipc } from "electron-better-ipc";
 
 class AsyncUtilities {
-  static async GetRandom() {
-    return handleError(await ipc.callMain("AsyncUtilities.GetRandom"));
+  static async GetRandomAsync() {
+    return handleError(await ipc.callMain("AsyncUtilities.GetRandomAsync"));
+  }
+
+  static async BlockUIAsync() {
+    return handleError(await ipc.callMain("AsyncUtilities.BlockUIAsync"));
   }
 
   static async BlockUI() {
-    return handleError(await ipc.callMain("AsyncUtilities.BlockUI"));
+    return handleError(ipc.sendSync("AsyncUtilities.BlockUI"));
   }
 }
 

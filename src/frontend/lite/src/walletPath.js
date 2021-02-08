@@ -14,7 +14,7 @@ if (process.type !== "renderer") {
     );
   } else {
     walletPath = app.getPath("userData");
-    if (isDevelopment) walletPath = walletPath + "_dev";
+    if (isDevelopment) walletPath = walletPath + "_dev_unity_tests";
   }
 }
 

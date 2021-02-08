@@ -44,18 +44,27 @@ let CustomIpcHandlersMixin = superclass =>
         }
       });
 
-      ipc.answerRenderer("AsyncUtilities.GetRandom", async () => {
-        console.log(`IPC: BackendUtilities.GetRandom()`);
+      ipc.answerRenderer("AsyncUtilities.GetRandomAsync", async () => {
+        console.log(`IPC: BackendUtilities.GetRandomAsync()`);
         return {
           success: true,
           result: Math.random()
         };
       });
 
-      ipc.answerRenderer("AsyncUtilities.BlockUI", async () => {
-        console.log(`IPC: BackendUtilities.BlockUI()`);
+      ipc.answerRenderer("AsyncUtilities.BlockUIAsync", async () => {
+        console.log(`IPC: BackendUtilities.BlockUIAsync()`);
         await new Promise(r => setTimeout(r, 5000));
         return {
+          success: true,
+          result: new Date()
+        };
+      });
+
+      ipc.on("AsyncUtilities.BlockUI", async event => {
+        console.log(`IPC: AsyncUtilities.BlockUI()`);
+        await new Promise(r => setTimeout(r, 5000));
+        event.returnValue = {
           success: true,
           result: new Date()
         };

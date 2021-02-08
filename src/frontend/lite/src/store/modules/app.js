@@ -18,6 +18,7 @@ const app = {
   state: {
     coreReady: false,
     language: null,
+    progress: null,
     rate: null,
     splashReady: false,
     status: AppStatus.start,
@@ -32,6 +33,9 @@ const app = {
     },
     SET_LANGUAGE(state, language) {
       state.language = language;
+    },
+    SET_PROGRESS(state, progress) {
+      state.progress = progress;
     },
     SET_RATE(state, rate) {
       state.rate = rate;
@@ -67,6 +71,9 @@ const app = {
     },
     SET_LANGUAGE({ commit }, language) {
       commit("SET_LANGUAGE", language);
+    },
+    SET_PROGRESS({ commit }, progress) {
+      commit("SET_PROGRESS", progress);
     },
     SET_RATE({ commit }, rate) {
       commit("SET_RATE", rate);
