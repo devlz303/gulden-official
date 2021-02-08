@@ -1,64 +1,107 @@
 <template>
   <div id="app">
-    <app-wallet v-if="isWallet" />
-    <router-view v-else />
+    <div>routename: {{ routeName }}</div>
+    <div>statusses: {{ statusses.join(" > ") }}</div>
+    <div>progresses: {{ progresses.join(" > ") }}</div>
+
+    <div>balance: {{ balance }}</div>
+    <div>receiveAddress: {{ receiveAddress }}</div>
+
+    <button @click="getRandom">random</button>
+    <div>{{ random }}</div>
+
+    <button @click="blockUI">block ui</button>
+    <div>{{ ping }}</div>
+
+    <input v-model="command" />
+    <button @click="execute">execute</button>
+    <button @click="getProgressAsync">progress</button>
   </div>
 </template>
 
 <script>
 import { mapState } from "vuex";
-import AppWallet from "@/AppWallet";
+import AppStatus from "@/AppStatus";
+import { LibraryController, RpcController } from "@/unity/Controllers";
+import { AsyncUtilities } from "@/unity/AsyncUtilities";
+
+let progressTimeout = null;
 
 export default {
   name: "App",
-  components: {
-    AppWallet
+  data() {
+    return {
+      routeName: null,
+      statusses: [],
+      progress: 0,
+      progresses: [],
+      random: null,
+      ping: null,
+      command: null
+    };
   },
   created() {
-    this.changeLanguage(this.language);
-    document.querySelector("html").dataset.theme = this.theme;
-  },
-  watch: {
-    language() {
-      this.changeLanguage(this.language);
-    },
-    theme() {
-      document.querySelector("html").dataset.theme = this.theme;
-    }
+    this.onStatusChanged();
   },
   computed: {
-    ...mapState("app", ["language", "theme"]),
-    isWallet() {
-      switch (window.location.hash.toLowerCase()) {
-        case "#/debug":
-          return false;
-        default:
-          return true;
-      }
+    ...mapState("app", ["status"]),
+    ...mapState("wallet", ["balance", "receiveAddress"]),
+    showLoader() {
+      return (
+        this.splashReady === false ||
+        (this.status !== AppStatus.ready && this.status !== AppStatus.setup)
+      );
+    }
+  },
+  watch: {
+    status() {
+      this.onStatusChanged();
+    },
+    progress() {
+      this.progresses.push(this.progress);
     }
   },
   methods: {
-    changeLanguage(language) {
-      if (this.$i18n.locale === language) return;
-      this.$i18n.locale = language;
-      this.$forceUpdate();
+    async execute() {
+      let result = await RpcController.ExecuteAsync(this.command);
+      console.log(result);
+    },
+    async getProgressAsync() {
+      console.log(await LibraryController.GetUnifiedProgressAsync());
+    },
+    async blockUI() {
+      this.ping = await AsyncUtilities.BlockUI(Math.random());
+    },
+    async getRandom() {
+      this.random = await AsyncUtilities.GetRandom();
+    },
+    onStatusChanged() {
+      this.statusses.push(this.status);
+      let routeName;
+      switch (this.status) {
+        case AppStatus.setup:
+          routeName = "setup";
+          break;
+        case AppStatus.synchronize:
+          routeName = "transactions";
+          break;
+        case AppStatus.ready:
+          routeName = "transactions";
+          break;
+      }
+      this.routeName = routeName;
+      this.updateProgress();
+    },
+    updateProgress() {
+      clearTimeout(progressTimeout);
+      if (this.progress !== 0 && this.status !== AppStatus.synchronize) return;
+      this.progress = LibraryController.GetUnifiedProgress();
+      if (this.progress === 1) {
+        this.$store.dispatch("app/SET_STATUS", AppStatus.ready);
+      } else {
+        progressTimeout = setTimeout(this.updateProgress, 2500);
+      }
     }
   }
 };
 </script>
-
-<style lang="less">
-@import "./css/app.less";
-
-*,
-#app {
-  font-family: euclid, Helvetica, sans-serif;
-  font-style: normal;
-  font-weight: 400;
-  font-size: 15px;
-  -webkit-text-size-adjust: none;
-  text-rendering: optimizeLegibility;
-  font-variant-ligatures: none;
-  -webkit-font-smoothing: antialiased;
-}
-</style>

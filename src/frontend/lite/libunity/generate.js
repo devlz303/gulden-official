@@ -7,7 +7,10 @@ let inputFile = path.join(
 );
 
 let controllerFile = path.join(__dirname, "/../src/unity/Controllers.js");
-let libUnityFile = path.join(__dirname, "/../src/unity/LibUnity.js");
+let defaultIpcHandlersMixinFile = path.join(
+  __dirname,
+  "/../src/unity/DefaultIpcHandlersMixin.js"
+);
 
 let fileToParse = fs.readFileSync(inputFile, "utf8");
 let dataToParse = fileToParse.split("\n");
@@ -126,6 +129,15 @@ function getControllerCode() {
     for (let j = 0; j < custom.length; j++) {
       let f = custom[j];
       if (j > 0) code.push(``);
+      code.push(`static async ${f.name}Async(${f.args}) {`);
+      code.push(
+        `return handleError(await ipc.callMain("${controller.className}.${
+          f.name
+        }Async"${f.args.length > 0 ? ", {" + f.args + "}" : ""})
+        );`
+      );
+      code.push(`}`);
+      code.push(``);
       code.push(`static ${f.name}(${f.args}) {`);
       code.push(
         `return handleError(ipc.sendSync("${controller.className}.${f.name}"${
@@ -139,6 +151,14 @@ function getControllerCode() {
     for (let j = 0; j < controller.functions.length; j++) {
       let f = controller.functions[j];
       if (j > 0) code.push(``);
+      code.push(`static async ${PascalCase(f.name)}Async(${f.args}) {`);
+      code.push(
+        `return handleError(await ipc.callMain("${controller.className}.${
+          f.name
+        }Async"${f.args.length > 0 ? ", {" + f.args + "}" : ""}));`
+      );
+      code.push(`}`);
+      code.push(``);
       code.push(`static ${PascalCase(f.name)}(${f.args}) {`);
       code.push(
         `return handleError(ipc.sendSync("${controller.className}.${f.name}"${
@@ -183,13 +203,48 @@ function getLibUnityCode() {
       let f = controller.functions[j];
       if (j > 0) code.push(``);
       code.push(
-        `ipc.on("${controller.className}.${f.name}", ${
-          f.args.length > 0 ? "(event, " + f.args + ")" : "event"
+        `ipc.answerRenderer("${controller.className}.${f.name}Async", async ${
+          f.args.length > 0 ? "data" : "()"
         } => {`
       );
 
       let args = f.args.length > 0 ? f.args.split(", ") : [];
       let consoleArgs = "";
+      if (args.length > 0) {
+        for (let k = 0; k < args.length; k++) {
+          consoleArgs += k > 0 ? ", " : "";
+          consoleArgs += "${data." + args[k] + "}";
+        }
+      }
+
+      code.push(`
+        console.log(\`IPC: ${className}.${f.name}Async(${consoleArgs})\`);
+        try {
+          let result = this.${className}.${f.name}(
+            ${
+              f.args.length > 0
+                ? "data." + f.args.split(", ").join(", data.")
+                : ""
+            }
+          );
+          return {
+            success: true,
+            result: result
+          };
+        }
+        catch(e) {
+          return handleError(e);
+        }
+      `);
+      code.push(`});`);
+      code.push(``);
+      code.push(
+        `ipc.on("${controller.className}.${f.name}", ${
+          f.args.length > 0 ? "(event, " + f.args + ")" : "event"
+        } => {`
+      );
+
+      consoleArgs = "";
       if (args.length > 0) {
         for (let k = 0; k < args.length; k++) {
           consoleArgs += k > 0 ? ", " : "";
@@ -231,7 +286,7 @@ let result = controllerData.replace(
 );
 fs.writeFileSync(controllerFile, result, "utf-8");
 
-let libUnityData = fs.readFileSync(libUnityFile, "utf-8");
+let libUnityData = fs.readFileSync(defaultIpcHandlersMixinFile, "utf-8");
 replace = "";
 replace += "/* inject:generated-code */\r\n";
 replace += getLibUnityCode().join("\r\n");
@@ -241,7 +296,7 @@ result = libUnityData.replace(
   /\/\* inject:generated-code \*\/(.)+\/\* inject:generated-code \*\//s,
   replace
 );
-fs.writeFileSync(libUnityFile, result, "utf-8");
+fs.writeFileSync(defaultIpcHandlersMixinFile, result, "utf-8");
 
 function PascalCase(line) {
   return line.charAt(0).toUpperCase() + line.substr(1);
