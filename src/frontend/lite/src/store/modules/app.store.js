@@ -1,17 +1,4 @@
-import { Menu } from "electron";
 import AppStatus from "@/AppStatus";
-
-const enableDebugWindowOnCoreReady = async () => {
-  try {
-    let menu = Menu.getApplicationMenu();
-    if (menu === null) return;
-    menu.items
-      .find(x => x.label === "Help")
-      .submenu.items.find(x => x.label === "Debug window").enabled = true;
-  } catch (e) {
-    console.error(e);
-  }
-};
 
 const state = {
   coreReady: false,
@@ -33,7 +20,6 @@ const actions = {
       state.progress === 1 ? AppStatus.ready : AppStatus.synchronize
     );
     commit("SET_CORE_READY");
-    enableDebugWindowOnCoreReady();
   },
   SET_LANGUAGE({ commit }, language) {
     commit("SET_LANGUAGE", language);

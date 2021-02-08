@@ -25,22 +25,23 @@ let winMain;
 let winDebug;
 let libUnity = new LibUnity({ walletPath });
 
-/* TODO: refactor into function and add option to libgulden to remove existing wallet folder */
-if (isDevelopment) {
-  let args = process.argv.slice(2);
-  for (var i = 0; i < args.length; i++) {
-    switch (args[i].toLowerCase()) {
-      case "new-wallet":
-        fs.rmdirSync(walletPath, {
-          recursive: true
-        });
-        break;
-      default:
-        console.error(`unknown argument: ${args[i]}`);
-        break;
+// subscribe to coreReady action to enable the menu
+const coreReadySubscription = store.subscribeAction({
+  after: action => {
+    if (action.type === "app/SET_CORE_READY") {
+      coreReadySubscription(); // unsubscribe
+      try {
+        let menu = Menu.getApplicationMenu();
+        if (menu === null) return;
+        menu.items
+          .find(x => x.label === "Help")
+          .submenu.items.find(x => x.label === "Debug window").enabled = true;
+      } catch (e) {
+        console.error(e);
+      }
     }
   }
-}
+});
 
 // Scheme must be registered before the app is ready
 protocol.registerSchemesAsPrivileged([
