@@ -1,6 +1,18 @@
-import app from "./app";
-import wallet from "./wallet";
+/**
+ * Automatically imports all the modules and exports as a single module object
+ */
+const requireModule = require.context(".", false, /\.store\.js$/);
+const modules = {};
 
-const modules = { app, wallet };
+requireModule.keys().forEach(filename => {
+  // create the module name from fileName
+  // remove the store.js extension and capitalize
+  const moduleName = filename
+    .replace(/(\.\/|\.store\.js)/g, "")
+    .replace(/^\w/, c => c);
+
+  modules[moduleName] =
+    requireModule(filename).default || requireModule(filename);
+});
 
 export default modules;
