@@ -52,7 +52,7 @@ export default {
       passwordold: "",
       password1: "",
       password2: "",
-      isPasswordInvalid: false
+      isPasswordInvalid: false,
     };
   },
   computed: {
@@ -83,7 +83,7 @@ export default {
           return this.passwordsValidated === false;
       }
       return true;
-    }
+    },
   },
   mounted() {
     this.$refs.passwordold.focus();
@@ -126,7 +126,7 @@ export default {
       } else {
         this.isPasswordInvalid = true;
       }
-    }
-  }
+    },
+  },
 };
 </script>

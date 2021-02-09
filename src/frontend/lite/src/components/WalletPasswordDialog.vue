@@ -26,13 +26,13 @@ export default {
   props: {
     value: {
       type: String,
-      default: null
-    }
+      default: null,
+    },
   },
   data() {
     return {
       password: "",
-      isPasswordInvalid: false
+      isPasswordInvalid: false,
     };
   },
   computed: {
@@ -41,7 +41,7 @@ export default {
     },
     isButtonDisabled() {
       return this.password.trim().length === 0;
-    }
+    },
   },
   mounted() {
     this.$refs.password.focus();
@@ -59,7 +59,7 @@ export default {
       } else {
         this.isPasswordInvalid = true;
       }
-    }
-  }
+    },
+  },
 };
 </script>

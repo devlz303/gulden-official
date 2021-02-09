@@ -5,11 +5,11 @@ const state = {
   mutations: null,
   receiveAddress: null,
   walletBalance: null,
-  walletPassword: null
+  walletPassword: null,
 };
 
 const getters = {
-  totalBalance: state => {
+  totalBalance: (state) => {
     let balance = state.walletBalance;
     if (balance === undefined || balance === null) return null;
     return (
@@ -19,9 +19,9 @@ const getters = {
       100000000
     );
   },
-  accounts: state => {
+  accounts: (state) => {
     return state.accounts
-      .filter(x => x.state === "Normal")
+      .filter((x) => x.state === "Normal")
       .sort((a, b) => {
         const labelA = a.label.toUpperCase();
         const labelB = b.label.toUpperCase();
@@ -35,15 +35,15 @@ const getters = {
         return comparison;
       });
   },
-  account: state => {
-    return state.accounts.find(x => x.UUID === state.activeAccount);
-  }
+  account: (state) => {
+    return state.accounts.find((x) => x.UUID === state.activeAccount);
+  },
 };
 
 const actions = {
   SET_ACCOUNT_NAME({ state, commit }, payload) {
     let accounts = [...state.accounts];
-    let account = accounts.find(x => x.UUID === payload.accountUUID);
+    let account = accounts.find((x) => x.UUID === payload.accountUUID);
     account.label = payload.newAccountName;
     commit("SET_ACCOUNTS", accounts);
   },
@@ -69,7 +69,7 @@ const actions = {
   },
   SET_WALLET_PASSWORD({ commit }, password) {
     commit("SET_WALLET_PASSWORD", password);
-  }
+  },
 };
 
 const mutations = {
@@ -93,7 +93,7 @@ const mutations = {
   },
   SET_WALLET_PASSWORD(state, password) {
     state.walletPassword = password;
-  }
+  },
 };
 
 export default {
@@ -101,5 +101,5 @@ export default {
   state,
   getters,
   actions,
-  mutations
+  mutations,
 };

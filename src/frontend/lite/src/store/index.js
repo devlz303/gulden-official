@@ -22,12 +22,12 @@ if (process.type !== "renderer") {
     createPersistedState({
       storage: new Store({ cwd: walletPath, name: "user-settings" }), // use user-settings.json file to store settings in wallet folder
       invertIgnored: true, // use invertIgnored because we only want to store the paths in the ignoredPaths list
-      ignoredPaths: ["app.theme"] // <-- these properies will be stored in user-settings.json
+      ignoredPaths: ["app.theme"], // <-- these properies will be stored in user-settings.json
     })
   );
 }
 
 export default new Vuex.Store({
   modules: modules,
-  plugins: plugins
+  plugins: plugins,
 });

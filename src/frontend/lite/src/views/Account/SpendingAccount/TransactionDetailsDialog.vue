@@ -21,8 +21,8 @@ export default {
   props: {
     mutation: {
       type: Object,
-      default: null
-    }
+      default: null,
+    },
   },
   computed: {
     computedTimestamp() {
@@ -31,7 +31,7 @@ export default {
     },
     computedAmount() {
       return `${(this.mutation.change / 100000000).toFixed(2)} NLG`;
-    }
+    },
   },
   methods: {
     formatDate(d) {
@@ -39,7 +39,7 @@ export default {
       let options = {
         year: "numeric",
         month: "long",
-        day: "numeric"
+        day: "numeric",
       };
       if (date.getFullYear() === new Date().getFullYear()) delete options.year;
       return date.toLocaleString(this.$i18n.locale, options);
@@ -49,8 +49,8 @@ export default {
       return `${("0" + date.getHours()).slice(-2)}:${(
         "0" + date.getMinutes()
       ).slice(-2)}`;
-    }
-  }
+    },
+  },
 };
 </script>
 

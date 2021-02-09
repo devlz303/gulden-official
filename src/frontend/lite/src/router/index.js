@@ -18,7 +18,7 @@ const routes = [
         component: () =>
           import(
             /* webpackChunkName: "account-transactions" */ "../views/Account/SpendingAccount/Transactions.vue"
-          )
+          ),
       },
       {
         path: "send",
@@ -26,7 +26,7 @@ const routes = [
         component: () =>
           import(
             /* webpackChunkName: "account-send" */ "../views/Account/SpendingAccount/Send.vue"
-          )
+          ),
       },
       {
         path: "receive",
@@ -34,9 +34,9 @@ const routes = [
         component: () =>
           import(
             /* webpackChunkName: "account-receive" */ "../views/Account/SpendingAccount/Receive.vue"
-          )
-      }
-    ]
+          ),
+      },
+    ],
   },
   {
     path: "/setup",
@@ -44,8 +44,8 @@ const routes = [
     component: () =>
       import(/* webpackChunkName: "setup" */ "../views/Setup.vue"),
     meta: {
-      layout: "setup-layout"
-    }
+      layout: "setup-layout",
+    },
   },
   {
     path: "/settings",
@@ -58,7 +58,7 @@ const routes = [
         component: () =>
           import(
             /* webpackChunkName: "settings-list" */ "../views/Settings/SettingsList.vue"
-          )
+          ),
       },
       {
         path: "view-recovery-phrase",
@@ -66,7 +66,7 @@ const routes = [
         component: () =>
           import(
             /* webpackChunkName: "view-recovery-phrase" */ "../views/Settings/ViewRecoveryPhrase.vue"
-          )
+          ),
       },
       {
         path: "change-password",
@@ -74,20 +74,20 @@ const routes = [
         component: () =>
           import(
             /* webpackChunkName: "change-password" */ "../views/Settings/ChangePassword.vue"
-          )
-      }
-    ]
+          ),
+      },
+    ],
   },
   {
     path: "/debug",
     name: "debug",
     component: () =>
-      import(/* webpackChunkName: "debug-dialog" */ "../views/DebugDialog")
-  }
+      import(/* webpackChunkName: "debug-dialog" */ "../views/DebugDialog"),
+  },
 ];
 
 const router = new VueRouter({
-  routes
+  routes,
 });
 
 router.beforeEach((to, from, next) => {

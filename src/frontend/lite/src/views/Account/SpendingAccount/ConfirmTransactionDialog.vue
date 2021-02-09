@@ -21,7 +21,7 @@ export default {
   props: {
     amount: null,
     address: null,
-    password: null
+    password: null,
   },
   computed: {
     computedRequest() {
@@ -30,7 +30,7 @@ export default {
         address: this.address,
         label: "",
         desc: "",
-        amount: this.amount * 100000000
+        amount: this.amount * 100000000,
       };
     },
     computedAmount() {
@@ -40,7 +40,7 @@ export default {
       let fee =
         LibraryController.FeeForRecipient(this.computedRequest) / 100000000;
       return `+ ${fee} NLG FEE`;
-    }
+    },
   },
   methods: {
     confirm() {
@@ -62,8 +62,8 @@ export default {
 
       EventBus.$emit("transaction-succeeded");
       EventBus.$emit("close-dialog");
-    }
-  }
+    },
+  },
 };
 </script>
 

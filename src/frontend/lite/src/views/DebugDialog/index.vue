@@ -33,22 +33,22 @@ export default {
       current: 0,
       tabs: [
         {
-          title: "Information"
+          title: "Information",
         },
         {
-          title: "Console"
-        }
+          title: "Console",
+        },
       ],
       console: {
         output: [],
         commands: [],
-        idx: 0
-      }
+        idx: 0,
+      },
     };
   },
   components: {
     InformationPage,
-    DebugConsole
+    DebugConsole,
   },
   methods: {
     getTabClass(index) {
@@ -59,8 +59,8 @@ export default {
     },
     clearOutput() {
       this.console.output = [];
-    }
-  }
+    },
+  },
 };
 </script>
 

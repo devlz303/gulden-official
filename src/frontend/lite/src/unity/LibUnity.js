@@ -24,7 +24,7 @@ class LibUnity {
       extraArgs: process.env.UNITY_EXTRA_ARGS
         ? process.env.UNITY_EXTRA_ARGS
         : "",
-      ...options
+      ...options,
     };
 
     this.libraryController = new libUnity.NJSILibraryController();
@@ -74,19 +74,19 @@ class LibUnity {
   _initializeWalletController() {
     console.log("_initializeWalletController");
 
-    this.walletListener.notifyBalanceChange = function(new_balance) {
+    this.walletListener.notifyBalanceChange = function (new_balance) {
       console.log(`walletListener.notifyBalanceChange`);
       store.dispatch("wallet/SET_WALLET_BALANCE", new_balance);
     };
 
-    this.walletListener.notifyNewMutation = function(
+    this.walletListener.notifyNewMutation = function (
       mutation /*, self_committed*/
     ) {
       console.log("walletListener.notifyNewMutation");
       console.log(mutation);
     };
 
-    this.walletListener.notifyUpdatedTransaction = function(transaction) {
+    this.walletListener.notifyUpdatedTransaction = function (transaction) {
       console.log("walletListener.notifyUpdatedTransaction");
       console.log(transaction);
     };
@@ -98,8 +98,8 @@ class LibUnity {
     let accounts = this.accountsController.listAccounts();
     let accountBalances = this.accountsController.getAllAccountBalances();
 
-    Object.keys(accountBalances).forEach(key => {
-      let currentAccount = accounts.find(x => x.UUID === key);
+    Object.keys(accountBalances).forEach((key) => {
+      let currentAccount = accounts.find((x) => x.UUID === key);
       let currentBalance = accountBalances[key];
 
       currentAccount.balance = FormatBalance(
@@ -121,17 +121,17 @@ class LibUnity {
     let self = this;
     let libraryController = this.libraryController;
 
-    this.accountsListener.onAccountNameChanged = function(
+    this.accountsListener.onAccountNameChanged = function (
       accountUUID,
       newAccountName
     ) {
       store.dispatch("wallet/SET_ACCOUNT_NAME", {
         accountUUID,
-        newAccountName
+        newAccountName,
       });
     };
 
-    this.accountsListener.onActiveAccountChanged = function(accountUUID) {
+    this.accountsListener.onActiveAccountChanged = function (accountUUID) {
       store.dispatch("wallet/SET_ACTIVE_ACCOUNT", accountUUID);
 
       store.dispatch(
@@ -145,11 +145,11 @@ class LibUnity {
       );
     };
 
-    this.accountsListener.onAccountAdded = function() {
+    this.accountsListener.onAccountAdded = function () {
       self._updateAccounts();
     };
 
-    this.accountsListener.onAccountDeleted = function() {
+    this.accountsListener.onAccountDeleted = function () {
       self._updateAccounts();
     };
 
@@ -242,7 +242,7 @@ class LibUnity {
     let libraryListener = this.libraryListener;
     let libraryController = this.libraryController;
 
-    libraryListener.notifyCoreReady = function() {
+    libraryListener.notifyCoreReady = function () {
       console.log("received: notifyCoreReady");
 
       self._initializeWalletController();
@@ -252,16 +252,16 @@ class LibUnity {
       self._setStateWhenCoreAndMainWindowReady();
     };
 
-    libraryListener.logPrint = function(message) {
+    libraryListener.logPrint = function (message) {
       console.log("unity_core: " + message);
     };
 
-    libraryListener.notifyBalanceChange = function(new_balance) {
+    libraryListener.notifyBalanceChange = function (new_balance) {
       console.log("received: notifyBalanceChange");
       store.dispatch("wallet/SET_BALANCE", new_balance);
     };
 
-    libraryListener.notifyNewMutation = function(/*mutation, self_committed*/) {
+    libraryListener.notifyNewMutation = function (/*mutation, self_committed*/) {
       console.log("received: notifyNewMutation");
 
       store.dispatch(
@@ -276,25 +276,25 @@ class LibUnity {
       self._updateAccounts();
     };
 
-    libraryListener.notifyUpdatedTransaction = function(/*transaction*/) {
+    libraryListener.notifyUpdatedTransaction = function (/*transaction*/) {
       console.log("received: notifyUpdatedTransaction");
       store.dispatch(
         "wallet/SET_MUTATIONS",
         libraryController.getMutationHistory()
       );
     };
-    libraryListener.notifyInitWithExistingWallet = function() {
+    libraryListener.notifyInitWithExistingWallet = function () {
       console.log("received: notifyInitWithExistingWallet");
       store.dispatch("app/SET_STATUS", AppStatus.synchronize);
     };
 
-    libraryListener.notifyInitWithoutExistingWallet = function() {
+    libraryListener.notifyInitWithoutExistingWallet = function () {
       console.log("received: notifyInitWithoutExistingWallet");
       self.newRecoveryPhrase = libraryController.GenerateRecoveryMnemonic();
       store.dispatch("app/SET_STATUS", AppStatus.setup);
     };
 
-    libraryListener.notifyShutdown = function() {
+    libraryListener.notifyShutdown = function () {
       //NB! It is important to set the libraryListener to null here as this is the last thing the core lib is waiting on for clean exit; once we set this to null we are free to quit the app
       libraryListener = null;
       console.log("received: notifyShutdown");
@@ -314,8 +314,8 @@ class LibUnity {
           result: {
             success: true,
             data: result,
-            command: filteredCommand
-          }
+            command: filteredCommand,
+          },
         };
       };
 
@@ -325,8 +325,8 @@ class LibUnity {
           result: {
             success: false,
             data: error,
-            command: filteredCommand
-          }
+            command: filteredCommand,
+          },
         };
       };
 
@@ -335,13 +335,13 @@ class LibUnity {
 
     /* inject:generated-code */
     // Register NJSILibraryController ipc handlers
-    ipc.on("NJSILibraryController.BuildInfo", event => {
+    ipc.on("NJSILibraryController.BuildInfo", (event) => {
       console.log(`IPC: libraryController.BuildInfo()`);
       try {
         let result = this.libraryController.BuildInfo();
         event.returnValue = {
           success: true,
-          result: result
+          result: result,
         };
       } catch (e) {
         event.returnValue = handleError(e);
@@ -361,7 +361,7 @@ class LibUnity {
           );
           event.returnValue = {
             success: true,
-            result: result
+            result: result,
           };
         } catch (e) {
           event.returnValue = handleError(e);
@@ -375,7 +375,7 @@ class LibUnity {
         let result = this.libraryController.IsValidLinkURI(phrase);
         event.returnValue = {
           success: true,
-          result: result
+          result: result,
         };
       } catch (e) {
         event.returnValue = handleError(e);
@@ -395,7 +395,7 @@ class LibUnity {
           );
           event.returnValue = {
             success: true,
-            result: result
+            result: result,
           };
         } catch (e) {
           event.returnValue = handleError(e);
@@ -403,13 +403,13 @@ class LibUnity {
       }
     );
 
-    ipc.on("NJSILibraryController.EraseWalletSeedsAndAccounts", event => {
+    ipc.on("NJSILibraryController.EraseWalletSeedsAndAccounts", (event) => {
       console.log(`IPC: libraryController.EraseWalletSeedsAndAccounts()`);
       try {
         let result = this.libraryController.EraseWalletSeedsAndAccounts();
         event.returnValue = {
           success: true,
-          result: result
+          result: result,
         };
       } catch (e) {
         event.returnValue = handleError(e);
@@ -422,33 +422,33 @@ class LibUnity {
         let result = this.libraryController.IsValidRecoveryPhrase(phrase);
         event.returnValue = {
           success: true,
-          result: result
+          result: result,
         };
       } catch (e) {
         event.returnValue = handleError(e);
       }
     });
 
-    ipc.on("NJSILibraryController.GenerateRecoveryMnemonic", event => {
+    ipc.on("NJSILibraryController.GenerateRecoveryMnemonic", (event) => {
       console.log(`IPC: libraryController.GenerateRecoveryMnemonic()`);
       try {
         let result = this.libraryController.GenerateRecoveryMnemonic();
         event.returnValue = {
           success: true,
-          result: result
+          result: result,
         };
       } catch (e) {
         event.returnValue = handleError(e);
       }
     });
 
-    ipc.on("NJSILibraryController.GenerateGenesisKeys", event => {
+    ipc.on("NJSILibraryController.GenerateGenesisKeys", (event) => {
       console.log(`IPC: libraryController.GenerateGenesisKeys()`);
       try {
         let result = this.libraryController.GenerateGenesisKeys();
         event.returnValue = {
           success: true,
-          result: result
+          result: result,
         };
       } catch (e) {
         event.returnValue = handleError(e);
@@ -468,7 +468,7 @@ class LibUnity {
           );
           event.returnValue = {
             success: true,
-            result: result
+            result: result,
           };
         } catch (e) {
           event.returnValue = handleError(e);
@@ -476,13 +476,13 @@ class LibUnity {
       }
     );
 
-    ipc.on("NJSILibraryController.TerminateUnityLib", event => {
+    ipc.on("NJSILibraryController.TerminateUnityLib", (event) => {
       console.log(`IPC: libraryController.TerminateUnityLib()`);
       try {
         let result = this.libraryController.TerminateUnityLib();
         event.returnValue = {
           success: true,
-          result: result
+          result: result,
         };
       } catch (e) {
         event.returnValue = handleError(e);
@@ -502,7 +502,7 @@ class LibUnity {
           );
           event.returnValue = {
             success: true,
-            result: result
+            result: result,
           };
         } catch (e) {
           event.returnValue = handleError(e);
@@ -510,39 +510,39 @@ class LibUnity {
       }
     );
 
-    ipc.on("NJSILibraryController.GetReceiveAddress", event => {
+    ipc.on("NJSILibraryController.GetReceiveAddress", (event) => {
       console.log(`IPC: libraryController.GetReceiveAddress()`);
       try {
         let result = this.libraryController.GetReceiveAddress();
         event.returnValue = {
           success: true,
-          result: result
+          result: result,
         };
       } catch (e) {
         event.returnValue = handleError(e);
       }
     });
 
-    ipc.on("NJSILibraryController.GetRecoveryPhrase", event => {
+    ipc.on("NJSILibraryController.GetRecoveryPhrase", (event) => {
       console.log(`IPC: libraryController.GetRecoveryPhrase()`);
       try {
         let result = this.libraryController.GetRecoveryPhrase();
         event.returnValue = {
           success: true,
-          result: result
+          result: result,
         };
       } catch (e) {
         event.returnValue = handleError(e);
       }
     });
 
-    ipc.on("NJSILibraryController.IsMnemonicWallet", event => {
+    ipc.on("NJSILibraryController.IsMnemonicWallet", (event) => {
       console.log(`IPC: libraryController.IsMnemonicWallet()`);
       try {
         let result = this.libraryController.IsMnemonicWallet();
         event.returnValue = {
           success: true,
-          result: result
+          result: result,
         };
       } catch (e) {
         event.returnValue = handleError(e);
@@ -555,20 +555,20 @@ class LibUnity {
         let result = this.libraryController.IsMnemonicCorrect(phrase);
         event.returnValue = {
           success: true,
-          result: result
+          result: result,
         };
       } catch (e) {
         event.returnValue = handleError(e);
       }
     });
 
-    ipc.on("NJSILibraryController.GetMnemonicDictionary", event => {
+    ipc.on("NJSILibraryController.GetMnemonicDictionary", (event) => {
       console.log(`IPC: libraryController.GetMnemonicDictionary()`);
       try {
         let result = this.libraryController.GetMnemonicDictionary();
         event.returnValue = {
           success: true,
-          result: result
+          result: result,
         };
       } catch (e) {
         event.returnValue = handleError(e);
@@ -581,20 +581,20 @@ class LibUnity {
         let result = this.libraryController.UnlockWallet(password);
         event.returnValue = {
           success: true,
-          result: result
+          result: result,
         };
       } catch (e) {
         event.returnValue = handleError(e);
       }
     });
 
-    ipc.on("NJSILibraryController.LockWallet", event => {
+    ipc.on("NJSILibraryController.LockWallet", (event) => {
       console.log(`IPC: libraryController.LockWallet()`);
       try {
         let result = this.libraryController.LockWallet();
         event.returnValue = {
           success: true,
-          result: result
+          result: result,
         };
       } catch (e) {
         event.returnValue = handleError(e);
@@ -614,7 +614,7 @@ class LibUnity {
           );
           event.returnValue = {
             success: true,
-            result: result
+            result: result,
           };
         } catch (e) {
           event.returnValue = handleError(e);
@@ -622,13 +622,13 @@ class LibUnity {
       }
     );
 
-    ipc.on("NJSILibraryController.DoRescan", event => {
+    ipc.on("NJSILibraryController.DoRescan", (event) => {
       console.log(`IPC: libraryController.DoRescan()`);
       try {
         let result = this.libraryController.DoRescan();
         event.returnValue = {
           success: true,
-          result: result
+          result: result,
         };
       } catch (e) {
         event.returnValue = handleError(e);
@@ -641,7 +641,7 @@ class LibUnity {
         let result = this.libraryController.IsValidRecipient(request);
         event.returnValue = {
           success: true,
-          result: result
+          result: result,
         };
       } catch (e) {
         event.returnValue = handleError(e);
@@ -654,7 +654,7 @@ class LibUnity {
         let result = this.libraryController.IsValidNativeAddress(address);
         event.returnValue = {
           success: true,
-          result: result
+          result: result,
         };
       } catch (e) {
         event.returnValue = handleError(e);
@@ -667,7 +667,7 @@ class LibUnity {
         let result = this.libraryController.IsValidBitcoinAddress(address);
         event.returnValue = {
           success: true,
-          result: result
+          result: result,
         };
       } catch (e) {
         event.returnValue = handleError(e);
@@ -680,7 +680,7 @@ class LibUnity {
         let result = this.libraryController.feeForRecipient(request);
         event.returnValue = {
           success: true,
-          result: result
+          result: result,
         };
       } catch (e) {
         event.returnValue = handleError(e);
@@ -700,7 +700,7 @@ class LibUnity {
           );
           event.returnValue = {
             success: true,
-            result: result
+            result: result,
           };
         } catch (e) {
           event.returnValue = handleError(e);
@@ -714,7 +714,7 @@ class LibUnity {
         let result = this.libraryController.getTransaction(txHash);
         event.returnValue = {
           success: true,
-          result: result
+          result: result,
         };
       } catch (e) {
         event.returnValue = handleError(e);
@@ -727,20 +727,20 @@ class LibUnity {
         let result = this.libraryController.resendTransaction(txHash);
         event.returnValue = {
           success: true,
-          result: result
+          result: result,
         };
       } catch (e) {
         event.returnValue = handleError(e);
       }
     });
 
-    ipc.on("NJSILibraryController.getAddressBookRecords", event => {
+    ipc.on("NJSILibraryController.getAddressBookRecords", (event) => {
       console.log(`IPC: libraryController.getAddressBookRecords()`);
       try {
         let result = this.libraryController.getAddressBookRecords();
         event.returnValue = {
           success: true,
-          result: result
+          result: result,
         };
       } catch (e) {
         event.returnValue = handleError(e);
@@ -753,7 +753,7 @@ class LibUnity {
         let result = this.libraryController.addAddressBookRecord(address);
         event.returnValue = {
           success: true,
-          result: result
+          result: result,
         };
       } catch (e) {
         event.returnValue = handleError(e);
@@ -770,7 +770,7 @@ class LibUnity {
           let result = this.libraryController.deleteAddressBookRecord(address);
           event.returnValue = {
             success: true,
-            result: result
+            result: result,
           };
         } catch (e) {
           event.returnValue = handleError(e);
@@ -778,52 +778,52 @@ class LibUnity {
       }
     );
 
-    ipc.on("NJSILibraryController.ResetUnifiedProgress", event => {
+    ipc.on("NJSILibraryController.ResetUnifiedProgress", (event) => {
       console.log(`IPC: libraryController.ResetUnifiedProgress()`);
       try {
         let result = this.libraryController.ResetUnifiedProgress();
         event.returnValue = {
           success: true,
-          result: result
+          result: result,
         };
       } catch (e) {
         event.returnValue = handleError(e);
       }
     });
 
-    ipc.on("NJSILibraryController.getLastSPVBlockInfos", event => {
+    ipc.on("NJSILibraryController.getLastSPVBlockInfos", (event) => {
       console.log(`IPC: libraryController.getLastSPVBlockInfos()`);
       try {
         let result = this.libraryController.getLastSPVBlockInfos();
         event.returnValue = {
           success: true,
-          result: result
+          result: result,
         };
       } catch (e) {
         event.returnValue = handleError(e);
       }
     });
 
-    ipc.on("NJSILibraryController.getUnifiedProgress", event => {
+    ipc.on("NJSILibraryController.getUnifiedProgress", (event) => {
       console.log(`IPC: libraryController.getUnifiedProgress()`);
       try {
         let result = this.libraryController.getUnifiedProgress();
         event.returnValue = {
           success: true,
-          result: result
+          result: result,
         };
       } catch (e) {
         event.returnValue = handleError(e);
       }
     });
 
-    ipc.on("NJSILibraryController.getMonitoringStats", event => {
+    ipc.on("NJSILibraryController.getMonitoringStats", (event) => {
       console.log(`IPC: libraryController.getMonitoringStats()`);
       try {
         let result = this.libraryController.getMonitoringStats();
         event.returnValue = {
           success: true,
-          result: result
+          result: result,
         };
       } catch (e) {
         event.returnValue = handleError(e);
@@ -840,7 +840,7 @@ class LibUnity {
           let result = this.libraryController.RegisterMonitorListener(listener);
           event.returnValue = {
             success: true,
-            result: result
+            result: result,
           };
         } catch (e) {
           event.returnValue = handleError(e);
@@ -860,7 +860,7 @@ class LibUnity {
           );
           event.returnValue = {
             success: true,
-            result: result
+            result: result,
           };
         } catch (e) {
           event.returnValue = handleError(e);
@@ -868,13 +868,13 @@ class LibUnity {
       }
     );
 
-    ipc.on("NJSILibraryController.getClientInfo", event => {
+    ipc.on("NJSILibraryController.getClientInfo", (event) => {
       console.log(`IPC: libraryController.getClientInfo()`);
       try {
         let result = this.libraryController.getClientInfo();
         event.returnValue = {
           success: true,
-          result: result
+          result: result,
         };
       } catch (e) {
         event.returnValue = handleError(e);
@@ -882,39 +882,39 @@ class LibUnity {
     });
 
     // Register NJSIWalletController ipc handlers
-    ipc.on("NJSIWalletController.HaveUnconfirmedFunds", event => {
+    ipc.on("NJSIWalletController.HaveUnconfirmedFunds", (event) => {
       console.log(`IPC: walletController.HaveUnconfirmedFunds()`);
       try {
         let result = this.walletController.HaveUnconfirmedFunds();
         event.returnValue = {
           success: true,
-          result: result
+          result: result,
         };
       } catch (e) {
         event.returnValue = handleError(e);
       }
     });
 
-    ipc.on("NJSIWalletController.GetBalanceSimple", event => {
+    ipc.on("NJSIWalletController.GetBalanceSimple", (event) => {
       console.log(`IPC: walletController.GetBalanceSimple()`);
       try {
         let result = this.walletController.GetBalanceSimple();
         event.returnValue = {
           success: true,
-          result: result
+          result: result,
         };
       } catch (e) {
         event.returnValue = handleError(e);
       }
     });
 
-    ipc.on("NJSIWalletController.GetBalance", event => {
+    ipc.on("NJSIWalletController.GetBalance", (event) => {
       console.log(`IPC: walletController.GetBalance()`);
       try {
         let result = this.walletController.GetBalance();
         event.returnValue = {
           success: true,
-          result: result
+          result: result,
         };
       } catch (e) {
         event.returnValue = handleError(e);
@@ -927,20 +927,20 @@ class LibUnity {
         let result = this.walletController.AbandonTransaction(txHash);
         event.returnValue = {
           success: true,
-          result: result
+          result: result,
         };
       } catch (e) {
         event.returnValue = handleError(e);
       }
     });
 
-    ipc.on("NJSIWalletController.GetUUID", event => {
+    ipc.on("NJSIWalletController.GetUUID", (event) => {
       console.log(`IPC: walletController.GetUUID()`);
       try {
         let result = this.walletController.GetUUID();
         event.returnValue = {
           success: true,
-          result: result
+          result: result,
         };
       } catch (e) {
         event.returnValue = handleError(e);
@@ -948,13 +948,13 @@ class LibUnity {
     });
 
     // Register NJSIRpcController ipc handlers
-    ipc.on("NJSIRpcController.getAutocompleteList", event => {
+    ipc.on("NJSIRpcController.getAutocompleteList", (event) => {
       console.log(`IPC: rpcController.getAutocompleteList()`);
       try {
         let result = this.rpcController.getAutocompleteList();
         event.returnValue = {
           success: true,
-          result: result
+          result: result,
         };
       } catch (e) {
         event.returnValue = handleError(e);
@@ -962,39 +962,39 @@ class LibUnity {
     });
 
     // Register NJSIP2pNetworkController ipc handlers
-    ipc.on("NJSIP2pNetworkController.disableNetwork", event => {
+    ipc.on("NJSIP2pNetworkController.disableNetwork", (event) => {
       console.log(`IPC: p2pNetworkController.disableNetwork()`);
       try {
         let result = this.p2pNetworkController.disableNetwork();
         event.returnValue = {
           success: true,
-          result: result
+          result: result,
         };
       } catch (e) {
         event.returnValue = handleError(e);
       }
     });
 
-    ipc.on("NJSIP2pNetworkController.enableNetwork", event => {
+    ipc.on("NJSIP2pNetworkController.enableNetwork", (event) => {
       console.log(`IPC: p2pNetworkController.enableNetwork()`);
       try {
         let result = this.p2pNetworkController.enableNetwork();
         event.returnValue = {
           success: true,
-          result: result
+          result: result,
         };
       } catch (e) {
         event.returnValue = handleError(e);
       }
     });
 
-    ipc.on("NJSIP2pNetworkController.getPeerInfo", event => {
+    ipc.on("NJSIP2pNetworkController.getPeerInfo", (event) => {
       console.log(`IPC: p2pNetworkController.getPeerInfo()`);
       try {
         let result = this.p2pNetworkController.getPeerInfo();
         event.returnValue = {
           success: true,
-          result: result
+          result: result,
         };
       } catch (e) {
         event.returnValue = handleError(e);
@@ -1002,13 +1002,13 @@ class LibUnity {
     });
 
     // Register NJSIAccountsController ipc handlers
-    ipc.on("NJSIAccountsController.listAccounts", event => {
+    ipc.on("NJSIAccountsController.listAccounts", (event) => {
       console.log(`IPC: accountsController.listAccounts()`);
       try {
         let result = this.accountsController.listAccounts();
         event.returnValue = {
           success: true,
-          result: result
+          result: result,
         };
       } catch (e) {
         event.returnValue = handleError(e);
@@ -1021,20 +1021,20 @@ class LibUnity {
         let result = this.accountsController.setActiveAccount(accountUUID);
         event.returnValue = {
           success: true,
-          result: result
+          result: result,
         };
       } catch (e) {
         event.returnValue = handleError(e);
       }
     });
 
-    ipc.on("NJSIAccountsController.getActiveAccount", event => {
+    ipc.on("NJSIAccountsController.getActiveAccount", (event) => {
       console.log(`IPC: accountsController.getActiveAccount()`);
       try {
         let result = this.accountsController.getActiveAccount();
         event.returnValue = {
           success: true,
-          result: result
+          result: result,
         };
       } catch (e) {
         event.returnValue = handleError(e);
@@ -1054,7 +1054,7 @@ class LibUnity {
           );
           event.returnValue = {
             success: true,
-            result: result
+            result: result,
           };
         } catch (e) {
           event.returnValue = handleError(e);
@@ -1068,7 +1068,7 @@ class LibUnity {
         let result = this.accountsController.getAccountName(accountUUID);
         event.returnValue = {
           success: true,
-          result: result
+          result: result,
         };
       } catch (e) {
         event.returnValue = handleError(e);
@@ -1088,7 +1088,7 @@ class LibUnity {
           );
           event.returnValue = {
             success: true,
-            result: result
+            result: result,
           };
         } catch (e) {
           event.returnValue = handleError(e);
@@ -1102,7 +1102,7 @@ class LibUnity {
         let result = this.accountsController.deleteAccount(accountUUID);
         event.returnValue = {
           success: true,
-          result: result
+          result: result,
         };
       } catch (e) {
         event.returnValue = handleError(e);
@@ -1115,7 +1115,7 @@ class LibUnity {
         let result = this.accountsController.purgeAccount(accountUUID);
         event.returnValue = {
           success: true,
-          result: result
+          result: result,
         };
       } catch (e) {
         event.returnValue = handleError(e);
@@ -1128,7 +1128,7 @@ class LibUnity {
         let result = this.accountsController.getAccountLinkURI(accountUUID);
         event.returnValue = {
           success: true,
-          result: result
+          result: result,
         };
       } catch (e) {
         event.returnValue = handleError(e);
@@ -1141,7 +1141,7 @@ class LibUnity {
         let result = this.accountsController.getWitnessKeyURI(accountUUID);
         event.returnValue = {
           success: true,
-          result: result
+          result: result,
         };
       } catch (e) {
         event.returnValue = handleError(e);
@@ -1161,7 +1161,7 @@ class LibUnity {
           );
           event.returnValue = {
             success: true,
-            result: result
+            result: result,
           };
         } catch (e) {
           event.returnValue = handleError(e);
@@ -1175,7 +1175,7 @@ class LibUnity {
         let result = this.accountsController.getReceiveAddress(accountUUID);
         event.returnValue = {
           success: true,
-          result: result
+          result: result,
         };
       } catch (e) {
         event.returnValue = handleError(e);
@@ -1194,7 +1194,7 @@ class LibUnity {
           );
           event.returnValue = {
             success: true,
-            result: result
+            result: result,
           };
         } catch (e) {
           event.returnValue = handleError(e);
@@ -1212,7 +1212,7 @@ class LibUnity {
           let result = this.accountsController.getMutationHistory(accountUUID);
           event.returnValue = {
             success: true,
-            result: result
+            result: result,
           };
         } catch (e) {
           event.returnValue = handleError(e);
@@ -1220,13 +1220,13 @@ class LibUnity {
       }
     );
 
-    ipc.on("NJSIAccountsController.getActiveAccountBalance", event => {
+    ipc.on("NJSIAccountsController.getActiveAccountBalance", (event) => {
       console.log(`IPC: accountsController.getActiveAccountBalance()`);
       try {
         let result = this.accountsController.getActiveAccountBalance();
         event.returnValue = {
           success: true,
-          result: result
+          result: result,
         };
       } catch (e) {
         event.returnValue = handleError(e);
@@ -1239,20 +1239,20 @@ class LibUnity {
         let result = this.accountsController.getAccountBalance(accountUUID);
         event.returnValue = {
           success: true,
-          result: result
+          result: result,
         };
       } catch (e) {
         event.returnValue = handleError(e);
       }
     });
 
-    ipc.on("NJSIAccountsController.getAllAccountBalances", event => {
+    ipc.on("NJSIAccountsController.getAllAccountBalances", (event) => {
       console.log(`IPC: accountsController.getAllAccountBalances()`);
       try {
         let result = this.accountsController.getAllAccountBalances();
         event.returnValue = {
           success: true,
-          result: result
+          result: result,
         };
       } catch (e) {
         event.returnValue = handleError(e);
@@ -1260,7 +1260,7 @@ class LibUnity {
     });
     /* inject:generated-code */
 
-    ipc.on("BackendUtilities.GetBuySessionUrl", async event => {
+    ipc.on("BackendUtilities.GetBuySessionUrl", async (event) => {
       console.log(`IPC: BackendUtilities.GetBuySessionUrl()`);
       try {
         var formData = new FormData();
@@ -1272,13 +1272,13 @@ class LibUnity {
           "https://www.blockhut.com/buysession.php",
           formData,
           {
-            headers: formData.getHeaders()
+            headers: formData.getHeaders(),
           }
         );
 
         event.returnValue = {
           success: response.data.status_message === "OK",
-          result: `https://blockhut.com/buy.php?sessionid=${response.data.sessionid}`
+          result: `https://blockhut.com/buy.php?sessionid=${response.data.sessionid}`,
         };
       } catch (e) {
         event.returnValue = handleError(e);
@@ -1291,7 +1291,7 @@ function handleError(error) {
   console.error(error);
   return {
     error: error,
-    result: null
+    result: null,
   };
 }
 

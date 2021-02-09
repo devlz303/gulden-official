@@ -12,7 +12,7 @@ import AppWallet from "@/AppWallet";
 export default {
   name: "App",
   components: {
-    AppWallet
+    AppWallet,
   },
   created() {
     this.changeLanguage(this.language);
@@ -24,7 +24,7 @@ export default {
     },
     theme() {
       document.querySelector("html").dataset.theme = this.theme;
-    }
+    },
   },
   computed: {
     ...mapState("app", ["language", "theme"]),
@@ -35,15 +35,15 @@ export default {
         default:
           return true;
       }
-    }
+    },
   },
   methods: {
     changeLanguage(language) {
       if (this.$i18n.locale === language) return;
       this.$i18n.locale = language;
       this.$forceUpdate();
-    }
-  }
+    },
+  },
 };
 </script>
 

@@ -11,22 +11,22 @@ export default {
   name: "Account",
   data() {
     return {
-      accountType: "div"
+      accountType: "div",
     };
   },
   props: {
-    id: null
+    id: null,
   },
   components: {
-    SpendingAccount
+    SpendingAccount,
   },
   computed: {
-    ...mapGetters("wallet", ["account"])
+    ...mapGetters("wallet", ["account"]),
   },
   watch: {
     account() {
       this.onAccountChanged();
-    }
+    },
   },
   mounted() {
     this.onAccountChanged();
@@ -36,7 +36,7 @@ export default {
       if (this.account) {
         this.accountType = SpendingAccount;
       }
-    }
-  }
+    },
+  },
 };
 </script>

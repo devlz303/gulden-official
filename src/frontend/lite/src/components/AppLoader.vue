@@ -37,7 +37,7 @@ export default {
   data() {
     return {
       electronVersion: process.versions.electron,
-      progress: 0
+      progress: 0,
     };
   },
   computed: {
@@ -45,7 +45,7 @@ export default {
       "splashReady",
       "status",
       "unityVersion",
-      "walletVersion"
+      "walletVersion",
     ]),
     showLoader() {
       return (
@@ -58,7 +58,7 @@ export default {
     },
     isSynchronizing() {
       return this.status === AppStatus.synchronize;
-    }
+    },
   },
   watch: {
     status() {
@@ -66,7 +66,7 @@ export default {
     },
     progress() {
       this.$refs.progress.value = parseInt(this.progress * 100);
-    }
+    },
   },
   created() {
     this.onStatusChanged();
@@ -94,8 +94,8 @@ export default {
       } else {
         progressTimeout = setTimeout(this.updateProgress, 2500);
       }
-    }
-  }
+    },
+  },
 };
 </script>
 

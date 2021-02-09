@@ -56,12 +56,12 @@ export default {
     totalBalanceFiat() {
       if (!this.rate) return "";
       return `€ ${(this.totalBalance * this.rate).toFixed(2)}`;
-    }
+    },
   },
   watch: {
     progress() {
       console.log(`${this.progress}`);
-    }
+    },
   },
   methods: {
     routeTo(route) {
@@ -83,11 +83,11 @@ export default {
         EventBus.$emit("show-dialog", {
           title: this.$t("password_dialog.unlock_wallet"),
           component: WalletPasswordDialog,
-          showButtons: false
+          showButtons: false,
         });
       }
-    }
-  }
+    },
+  },
 };
 </script>
 

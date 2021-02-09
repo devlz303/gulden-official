@@ -3,7 +3,7 @@ const AppStatus = {
   setup: "setup",
   synchronize: "synchronize",
   ready: "ready",
-  shutdown: "shutdown"
+  shutdown: "shutdown",
 };
 
 export default AppStatus;

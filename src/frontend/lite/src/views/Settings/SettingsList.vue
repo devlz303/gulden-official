@@ -32,7 +32,7 @@ import { mapState } from "vuex";
 
 export default {
   computed: {
-    ...mapState("app", ["theme"])
+    ...mapState("app", ["theme"]),
   },
   methods: {
     getThemeSelectClassNames(theme) {
@@ -45,8 +45,8 @@ export default {
     },
     switchTheme(theme) {
       this.$store.dispatch("app/SET_THEME", theme);
-    }
-  }
+    },
+  },
 };
 </script>
 

@@ -21,14 +21,14 @@ export default {
   name: "AppWallet",
   data() {
     return {
-      modal: null
+      modal: null,
     };
   },
   components: {
     AppLoader,
     ModalDialog,
     SetupLayout,
-    WalletLayout
+    WalletLayout,
   },
   created() {
     this.onStatusChanged();
@@ -51,12 +51,12 @@ export default {
         this.splashReady === false ||
         (this.status !== AppStatus.ready && this.status !== AppStatus.setup)
       );
-    }
+    },
   },
   watch: {
     status() {
       this.onStatusChanged();
-    }
+    },
   },
   methods: {
     onStatusChanged() {
@@ -80,7 +80,7 @@ export default {
     },
     showModal(modal) {
       this.modal = modal;
-    }
-  }
+    },
+  },
 };
 </script>

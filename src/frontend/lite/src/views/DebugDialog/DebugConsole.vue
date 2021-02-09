@@ -68,7 +68,7 @@ export default {
       fontSize: 0.8,
       autocompleteList: [],
       filteredAutocompleteList: [],
-      preventAutocompleteList: false
+      preventAutocompleteList: false,
     };
   },
   props: {
@@ -78,10 +78,10 @@ export default {
         return {
           output: [],
           commands: [],
-          idx: 0
+          idx: 0,
         };
-      }
-    }
+      },
+    },
   },
   computed: {
     output() {
@@ -95,7 +95,7 @@ export default {
     },
     outputStyle() {
       return `font-size: ${this.fontSize}rem;`;
-    }
+    },
   },
   created() {
     this.autocompleteList = RpcController.GetAutocompleteList();
@@ -107,7 +107,7 @@ export default {
   watch: {
     command() {
       this.filterAutocompleteList();
-    }
+    },
   },
   methods: {
     formatData(input) {
@@ -120,7 +120,7 @@ export default {
     },
     moveToEnd() {
       let command = this.$refs.command;
-      setTimeout(function() {
+      setTimeout(function () {
         command.selectionStart = command.selectionEnd = command.value.length;
       }, 0);
     },
@@ -133,7 +133,7 @@ export default {
 
           this.value.output.push({
             type: "command",
-            data: result.command
+            data: result.command,
           });
           this.value.output.push({ type: "result", ...result });
 
@@ -205,15 +205,15 @@ export default {
       let filteredAutocompleteList = [];
 
       if (this.command && this.command.length > 0) {
-        filteredAutocompleteList = this.autocompleteList.filter(item => {
+        filteredAutocompleteList = this.autocompleteList.filter((item) => {
           return item.startsWith(this.command);
         });
         if (filteredAutocompleteList.length > 20) filteredAutocompleteList = [];
       }
 
       this.filteredAutocompleteList = filteredAutocompleteList;
-    }
-  }
+    },
+  },
 };
 </script>
 

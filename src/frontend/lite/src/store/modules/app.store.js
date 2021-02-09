@@ -8,7 +8,7 @@ const state = {
   status: AppStatus.start,
   theme: null,
   unityVersion: null,
-  walletVersion: null
+  walletVersion: null,
 };
 
 const getters = {};
@@ -41,7 +41,7 @@ const actions = {
   },
   SET_WALLET_VERSION({ commit }, version) {
     commit("SET_WALLET_VERSION", version);
-  }
+  },
 };
 
 const mutations = {
@@ -69,7 +69,7 @@ const mutations = {
   },
   SET_WALLET_VERSION(state, version) {
     state.walletVersion = version;
-  }
+  },
 };
 
 export default {
@@ -77,5 +77,5 @@ export default {
   state,
   getters,
   actions,
-  mutations
+  mutations,
 };

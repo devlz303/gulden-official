@@ -38,15 +38,15 @@ import { BackendUtilities } from "@/unity/Controllers";
 export default {
   name: "Receive",
   components: {
-    VueQrcode
+    VueQrcode,
   },
   data() {
     return {
-      buyDisabled: false
+      buyDisabled: false,
     };
   },
   computed: {
-    ...mapState("wallet", ["receiveAddress"])
+    ...mapState("wallet", ["receiveAddress"]),
   },
   methods: {
     async buyGulden() {
@@ -64,8 +64,8 @@ export default {
     copyQr() {
       let img = nativeImage.createFromDataURL(this.$refs.qrcode.$el.src);
       clipboard.writeImage(img);
-    }
-  }
+    },
+  },
 };
 </script>
 

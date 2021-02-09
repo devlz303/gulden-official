@@ -98,18 +98,18 @@ export default {
       generatedRecoveryPhrase: null,
       password1: "",
       password2: "",
-      reset: false
+      reset: false,
     };
   },
   components: {
-    PhraseInput
+    PhraseInput,
   },
   computed: {
     validate() {
       if (this.isRecovery) {
         return {
           length: 12,
-          words: LibraryController.GetMnemonicDictionary()
+          words: LibraryController.GetMnemonicDictionary(),
         };
       } else {
         return this.recoveryPhrase;
@@ -158,7 +158,7 @@ export default {
     },
     validateButtonClass() {
       return this.isRecoveryPhraseInvalid ? "error" : "";
-    }
+    },
   },
   watch: {
     current() {
@@ -174,7 +174,7 @@ export default {
             break;
         }
       });
-    }
+    },
   },
   methods: {
     setupWallet(isRecovery) {
@@ -204,7 +204,7 @@ export default {
             EventBus.$emit("show-dialog", {
               type: "error",
               title: this.$t("setup.invalid_recovery_phrase.title"),
-              message: this.$t("setup.invalid_recovery_phrase.message")
+              message: this.$t("setup.invalid_recovery_phrase.message"),
             });
 
             this.isRecoveryPhraseInvalid = true;
@@ -254,8 +254,8 @@ export default {
     },
     validatePasswordsOnEnter() {
       if (event.keyCode === 13 && this.passwordsValidated) this.nextStep();
-    }
-  }
+    },
+  },
 };
 </script>
 

@@ -47,7 +47,7 @@ export default {
     return {
       recoveryPhrase: null,
       password: "",
-      isPasswordInvalid: false
+      isPasswordInvalid: false,
     };
   },
   mounted() {
@@ -68,7 +68,7 @@ export default {
     },
     isNextDisabled() {
       return this.password.trim().length === 0;
-    }
+    },
   },
   methods: {
     getRecoveryPhraseOnEnter() {
@@ -85,8 +85,8 @@ export default {
     },
     ready() {
       this.$router.push({ name: "settings" });
-    }
-  }
+    },
+  },
 };
 </script>
 

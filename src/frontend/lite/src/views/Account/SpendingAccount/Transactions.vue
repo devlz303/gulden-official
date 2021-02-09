@@ -44,7 +44,7 @@ export default {
   name: "Transactions",
   data() {
     return {
-      buyDisabled: false
+      buyDisabled: false,
     };
   },
   computed: {
@@ -73,7 +73,7 @@ export default {
           currentGroup = {
             idx: groupedMutations.length,
             date: dateStart,
-            mutations: []
+            mutations: [],
           };
 
           groupedMutations.push(currentGroup);
@@ -81,7 +81,7 @@ export default {
         currentGroup.mutations.push(mutation);
       }
       return groupedMutations;
-    }
+    },
   },
   methods: {
     mutationIcon(mutation) {
@@ -102,7 +102,7 @@ export default {
       let options = {
         year: "numeric",
         month: "long",
-        day: "numeric"
+        day: "numeric",
       };
       if (date.getFullYear() === new Date().getFullYear()) delete options.year;
 
@@ -128,9 +128,9 @@ export default {
         ),
         component: TransactionDetailsDialog,
         componentProps: {
-          mutation: mutation
+          mutation: mutation,
         },
-        showButtons: false
+        showButtons: false,
       });
     },
     async buyGulden() {
@@ -144,8 +144,8 @@ export default {
       } finally {
         this.buyDisabled = false;
       }
-    }
-  }
+    },
+  },
 };
 </script>
 

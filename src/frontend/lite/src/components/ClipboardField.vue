@@ -19,16 +19,16 @@ export default {
   name: "ClipboardField",
   props: {
     value: {
-      type: String
+      type: String,
     },
     confirmation: {
       type: String,
-      default: "clipboard_field.copied_to_clipboard"
-    }
+      default: "clipboard_field.copied_to_clipboard",
+    },
   },
   data() {
     return {
-      confirmCopy: false
+      confirmCopy: false,
     };
   },
   methods: {
@@ -40,8 +40,8 @@ export default {
           this.confirmCopy = false;
         }, 1500);
       }
-    }
-  }
+    },
+  },
 };
 </script>
 

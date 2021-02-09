@@ -23,20 +23,20 @@ export default {
   props: {
     validate: {
       type: [String, Object],
-      default: ""
+      default: "",
     },
     isPhraseInvalid: {
       type: Boolean,
-      default: false
+      default: false,
     },
     autofocus: {
       type: Boolean,
-      default: true
-    }
+      default: true,
+    },
   },
   data() {
     return {
-      inputs: []
+      inputs: [],
     };
   },
   mounted() {
@@ -52,11 +52,9 @@ export default {
     },
     words() {
       return this.isRecovery
-        ? Array(this.validate.length)
-            .join(".")
-            .split(".")
+        ? Array(this.validate.length).join(".").split(".")
         : this.validate.split(" ");
-    }
+    },
   },
   methods: {
     clear() {
@@ -155,13 +153,13 @@ export default {
     },
     getValidWords(index) {
       return this.validate.words.filter(
-        x => x.indexOf(this.inputs[index]) === 0
+        (x) => x.indexOf(this.inputs[index]) === 0
       );
     },
     validatePraseOnEnter(event) {
       if (event.keyCode === 13) this.$emit("enter");
-    }
-  }
+    },
+  },
 };
 </script>
 

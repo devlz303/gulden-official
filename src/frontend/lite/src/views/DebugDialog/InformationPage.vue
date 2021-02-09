@@ -75,7 +75,7 @@ export default {
   data() {
     return {
       clientInfo: null,
-      enableTimeout: true
+      enableTimeout: true,
     };
   },
   name: "InformationPage",
@@ -91,7 +91,7 @@ export default {
       let connections_out = parseInt(this.clientInfo.num_connections_out);
 
       return `${connections_in + connections_out}`;
-    }
+    },
   },
   created() {
     document.addEventListener("webkitvisibilitychange", this.visibilityChange);
@@ -120,8 +120,8 @@ export default {
         this.enableTimeout = true;
         this.updateClientInfo();
       }
-    }
-  }
+    },
+  },
 };
 </script>
 

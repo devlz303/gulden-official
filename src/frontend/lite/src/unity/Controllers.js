@@ -399,7 +399,7 @@ export {
   WalletController,
   RpcController,
   P2pNetworkController,
-  AccountsController
+  AccountsController,
 };
 /* inject:generated-code */
 

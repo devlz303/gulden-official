@@ -15,16 +15,16 @@ export default {
   props: {
     title: {
       type: String,
-      default: ""
-    }
+      default: "",
+    },
   },
   components: {
-    GuldenSection
+    GuldenSection,
   },
   computed: {
     hasTitle() {
       return this.title !== null && this.title.trim().length > 0;
-    }
-  }
+    },
+  },
 };
 </script>

@@ -29,8 +29,8 @@ export default {
   props: {
     value: {
       type: Object,
-      default: null
-    }
+      default: null,
+    },
   },
   computed: {
     showModal() {
@@ -55,13 +55,13 @@ export default {
     },
     componentProps() {
       return this.value.componentProps;
-    }
+    },
   },
   methods: {
     closeModal() {
       EventBus.$emit("close-dialog");
-    }
-  }
+    },
+  },
 };
 </script>
 

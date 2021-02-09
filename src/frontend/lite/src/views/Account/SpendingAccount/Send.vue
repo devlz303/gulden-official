@@ -58,7 +58,7 @@ export default {
       password: null,
       isAmountInvalid: false,
       isAddressInvalid: false,
-      isPasswordInvalid: false
+      isPasswordInvalid: false,
     };
   },
   computed: {
@@ -92,7 +92,7 @@ export default {
         return true;
       if (this.computedPassword.trim().length === 0) return true;
       return false;
-    }
+    },
   },
   created() {
     this.maxAmount =
@@ -143,15 +143,15 @@ export default {
         componentProps: {
           amount: this.amount,
           address: this.address,
-          password: this.password
+          password: this.password,
         },
-        showButtons: false
+        showButtons: false,
       });
     },
     onTransactionSucceeded() {
       this.$router.push({ name: "transactions" });
-    }
-  }
+    },
+  },
 };
 </script>
 

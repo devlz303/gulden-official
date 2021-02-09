@@ -3,7 +3,7 @@
 
 import { app, protocol, Menu, BrowserWindow, shell } from "electron";
 import {
-  createProtocol
+  createProtocol,
   /* installVueDevtools */
 } from "vue-cli-plugin-electron-builder/lib";
 
@@ -26,25 +26,25 @@ let libUnity = new LibUnity({ walletPath });
 
 // subscribe to coreReady action to enable the menu
 const coreReadySubscription = store.subscribeAction({
-  after: action => {
+  after: (action) => {
     if (action.type === "app/SET_CORE_READY") {
       coreReadySubscription(); // unsubscribe
       try {
         let menu = Menu.getApplicationMenu();
         if (menu === null) return;
         menu.items
-          .find(x => x.label === "Help")
-          .submenu.items.find(x => x.label === "Debug window").enabled = true;
+          .find((x) => x.label === "Help")
+          .submenu.items.find((x) => x.label === "Debug window").enabled = true;
       } catch (e) {
         console.error(e);
       }
     }
-  }
+  },
 });
 
 // Scheme must be registered before the app is ready
 protocol.registerSchemesAsPrivileged([
-  { scheme: "app", privileges: { secure: true, standard: true } }
+  { scheme: "app", privileges: { secure: true, standard: true } },
 ]);
 
 function createMainWindow() {
@@ -59,12 +59,12 @@ function createMainWindow() {
     webPreferences: {
       // Use pluginOptions.nodeIntegration, leave this alone
       // See nklayman.github.io/vue-cli-plugin-electron-builder/guide/security.html#node-integration for more info
-      nodeIntegration: process.env.ELECTRON_NODE_INTEGRATION
-    }
+      nodeIntegration: process.env.ELECTRON_NODE_INTEGRATION,
+    },
   };
   if (os.platform() === "linux") {
     options = Object.assign({}, options, {
-      icon: path.join(__static, "icon.png")
+      icon: path.join(__static, "icon.png"),
     });
   }
   winMain = new BrowserWindow(options);
@@ -72,11 +72,11 @@ function createMainWindow() {
   var menuTemplate = [
     {
       label: "File",
-      submenu: [{ role: "quit" }]
+      submenu: [{ role: "quit" }],
     },
     {
       label: "Edit",
-      submenu: [{ role: "cut" }, { role: "copy" }, { role: "paste" }]
+      submenu: [{ role: "cut" }, { role: "copy" }, { role: "paste" }],
     },
     {
       label: "Help",
@@ -86,16 +86,16 @@ function createMainWindow() {
           enabled: store.state.app.coreReady,
           click() {
             createDebugWindow();
-          }
-        }
-      ]
-    }
+          },
+        },
+      ],
+    },
   ];
 
   if (isDevelopment) {
     menuTemplate.push({
       label: "Development",
-      submenu: [{ role: "toggleDevTools" }]
+      submenu: [{ role: "toggleDevTools" }],
     });
   }
 
@@ -119,7 +119,7 @@ function createMainWindow() {
     winMain.show();
   });
 
-  winMain.on("close", event => {
+  winMain.on("close", (event) => {
     console.log("winMain.on:close");
     if (process.platform !== "darwin") {
       EnsureUnityLibTerminated(event);
@@ -132,7 +132,7 @@ function createMainWindow() {
   });
 
   // Force external hrefs to open in external browser
-  winMain.webContents.on("new-window", function(e, url) {
+  winMain.webContents.on("new-window", function (e, url) {
     e.preventDefault();
     shell.openExternal(url);
   });
@@ -156,12 +156,12 @@ function createDebugWindow() {
     webPreferences: {
       // Use pluginOptions.nodeIntegration, leave this alone
       // See nklayman.github.io/vue-cli-plugin-electron-builder/guide/security.html#node-integration for more info
-      nodeIntegration: process.env.ELECTRON_NODE_INTEGRATION
-    }
+      nodeIntegration: process.env.ELECTRON_NODE_INTEGRATION,
+    },
   };
   if (os.platform() === "linux") {
     options = Object.assign({}, options, {
-      icon: path.join(__static, "icon.png")
+      icon: path.join(__static, "icon.png"),
     });
   }
   winDebug = new BrowserWindow(options);
@@ -184,7 +184,7 @@ function createDebugWindow() {
     winDebug.show();
   });
 
-  winDebug.on("close", event => {
+  winDebug.on("close", (event) => {
     console.log("winDebug.on:close");
     if (libUnity === null || libUnity.isTerminated) return;
     event.preventDefault();
@@ -197,7 +197,7 @@ function createDebugWindow() {
   });
 }
 
-app.on("will-quit", event => {
+app.on("will-quit", (event) => {
   console.log("app.on:will-quit");
   if (libUnity === null || libUnity.isTerminated) return;
   store.dispatch("app/SET_STATUS", AppStatus.shutdown);
@@ -206,7 +206,7 @@ app.on("will-quit", event => {
 });
 
 // Quit when all windows are closed.
-app.on("window-all-closed", event => {
+app.on("window-all-closed", (event) => {
   console.log("app.on:window-all-closed");
   // On macOS it is common for applications and their menu bar
   // to stay active until the user quits explicitly with Cmd + Q
@@ -255,7 +255,7 @@ app.on("ready", async () => {
 async function updateRate(seconds) {
   try {
     const response = await axios.get("https://api.gulden.com/api/v1/ticker");
-    const eur = response.data.data.find(item => {
+    const eur = response.data.data.find((item) => {
       return item.code === "EUR";
     });
     store.dispatch("app/SET_RATE", eur.rate);
@@ -278,7 +278,7 @@ function EnsureUnityLibTerminated(event) {
 // Exit cleanly on request from parent process in development mode.
 if (isDevelopment) {
   if (process.platform === "win32") {
-    process.on("message", data => {
+    process.on("message", (data) => {
       if (data === "graceful-exit") {
         app.quit();
       }

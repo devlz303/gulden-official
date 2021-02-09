@@ -16,14 +16,14 @@ import {
   faShieldCheck,
   faTimes,
   faUnlock,
-  faRedoAlt
+  faRedoAlt,
 } from "@fortawesome/pro-light-svg-icons";
 
 import { faListUl, faLongArrowDown } from "@fortawesome/pro-regular-svg-icons";
 
 import {
   faArrowCircleDown,
-  faArrowCircleUp
+  faArrowCircleUp,
 } from "@fortawesome/free-solid-svg-icons";
 
 library.add([
@@ -46,7 +46,7 @@ library.add([
   faShieldCheck,
   faTimes,
   faUnlock,
-  faRedoAlt
+  faRedoAlt,
 ]);
 
 export default FontAwesomeIcon;

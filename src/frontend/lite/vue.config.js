@@ -15,13 +15,13 @@ module.exports = {
         mac: {
           category: "public.app-category.finance",
           asar: false,
-          hardenedRuntime: true
+          hardenedRuntime: true,
         },
         win: {
-          sign: "./sign.js"
+          sign: "./sign.js",
         },
         linux: {
-          category: "public.app-category.finance"
+          category: "public.app-category.finance",
         },
         dmg: {
           background: "./build/background.tiff",
@@ -30,29 +30,29 @@ module.exports = {
               x: 410,
               y: 190,
               type: "link",
-              path: "/Applications"
+              path: "/Applications",
             },
             {
               x: 130,
               y: 190,
-              type: "file"
-            }
-          ]
-        }
-      }
+              type: "file",
+            },
+          ],
+        },
+      },
     },
     i18n: {
       locale: "en",
       fallbackLocale: "en",
       localeDir: "locales",
-      enableInSFC: false
-    }
+      enableInSFC: false,
+    },
   },
   css: {
     loaderOptions: {
       less: {
-        javascriptEnabled: true
-      }
-    }
-  }
+        javascriptEnabled: true,
+      },
+    },
+  },
 };

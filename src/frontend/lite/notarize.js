@@ -7,7 +7,7 @@ const getAuthInfo = () => {
   const {
     APPLE_ID: appleId,
     APPLE_ID_PASSWORD: appleIdPassword,
-    APP_ID: appId
+    APP_ID: appId,
   } = process.env;
 
   if (!appleId || !appleIdPassword) {
@@ -21,11 +21,11 @@ const getAuthInfo = () => {
 
   return {
     appleId,
-    appleIdPassword
+    appleIdPassword,
   };
 };
 
-module.exports = async params => {
+module.exports = async (params) => {
   if (params.electronPlatformName !== "darwin") {
     return;
   }
