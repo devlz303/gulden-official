@@ -1,6 +1,5 @@
 import Vue from "vue";
-import Vuex from "vuex";
-import createLogger from "vuex/dist/logger";
+import Vuex, { createLogger } from "vuex";
 import { createPersistedState, createSharedMutations } from "vuex-electron";
 import Store from "electron-store";
 import syncState from "./syncState";
